@@ -14,6 +14,6 @@ async def on_message(message):
         return
 
     if str(message.author) == "MahDoood#9478" and "!hey" in message.content.lower():
-        client.send_message(message.channel, f"Hey sexy {message.author.mention} . You are the only good looking one in here <3")
+        await client.send_message(message.channel, f"Hey sexy {message.author.mention} . You are the only good looking one in here <3")
 
 client.run(os.environ.get('TOKEN'))
