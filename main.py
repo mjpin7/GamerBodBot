@@ -30,15 +30,12 @@ class CommandHandle:
                     # If there are no arguments in the selected command, return the response
                     if command['number_args'] == 0:
                         return self.client.send_message(message.channel, str(command['function'](message, self.client, args)))
-                        break
                     else:
                         # If there are a correct number of arguments, return a response. Else return an error message
                         if len(args) >= command['number_args']:
                             return self.client.send_message(message.channel, str(command['function'](message, self.client, args)))
-                            break
                         else:
                             return self.client.send_message(message.channel, 'command "{}" requires {} argument(s): "{}"'.format(command['trigger'], command['number_args'], ', '.join(command['args_val'])))
-                            break
                 else:
                     break
 
@@ -54,7 +51,7 @@ handler = CommandHandle(client)
 ## ALL FUNCTIONS FOR COMMANDS GO HERE
 def function_greetings(message, client, args):
     try:
-        return "Hello {}".format(message.author)
+        return "Hello {}".format(message.author.mention)
     except Exception as e:
         return e
     
