@@ -54,7 +54,9 @@ client = discord.Client()
 # Create the CommandHandle object passing in the client
 handler = CommandHandle(client)
 
-## ALL FUNCTIONS FOR COMMANDS GO HERE
+## ALL FUNCTIONS FOR COMMANDS GO HERE WITH HANDLER BELOW RESPECTIVE FUNCTION
+
+# Simple function for hello command
 def function_greetings(message, client, args):
     try:
         return "Hello {}".format(message.author.mention)
@@ -69,12 +71,16 @@ handler.add_command({
     'desc': 'Sends greetings to the user'
 })
 
+# Function to handle the meme command
+#
+# References the google custom search api and a created custom google search to search multiple sites for a meme. Returns a random image.
+#
 def function_meme(message, client, args):
     try:
         resp = requests.get('https://www.googleapis.com/customsearch/v1?key={}&cx={}&q=meme&searchType=image&num=10&start={}'.format(os.environ.get('GOOGLEKEY'), os.environ.get('GOOGLE_SEARCH_ID'), randint(1, 100)))
 
-        if resp.status_code !=200:
-            raise ApiError('Get /tasks/ {}'.format(resp.status_code))
+        if resp.status_code != 200:
+            raise ApiError('Get error {} {}'.format(resp.status_code, resp.reason))
 
         meme = resp.json()["items"][randint(1, 10)]["link"]
         return meme
