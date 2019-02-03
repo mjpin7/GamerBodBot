@@ -1,3 +1,2 @@
 git+git://github.com/Rapptz/discord.py.git@async#egg=discord 
-google-api-python-client
 requests
