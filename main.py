@@ -1,5 +1,11 @@
 import discord
 import os
+import requests
+from random import randint
+import json
+
+class ApiError(Exception):
+    pass
 
 # Class to handle commands
 class CommandHandle:
@@ -61,6 +67,29 @@ handler.add_command({
     'number_args': 0,
     'args_val': [],
     'desc': 'Sends greetings to the user'
+})
+
+def function_meme(message, client, args):
+    try:
+        resp = requests.get('https://www.googleapis.com/customsearch/v1?key={}&cx={}&q=meme&searchType=image&num=10&start={}'.format(os.environ.get('GOOGLEKEY'), os.environ.get('GOOGLE_SEARCH_ID'), randint(1, 100)))
+
+        if resp.status_code !=200:
+            raise ApiError('Get /tasks/ {}'.format(resp.status_code))
+
+        meme = resp.json()["items"][randint(1, 10)]["link"]
+        return meme
+
+    except ApiError as a:
+        return a
+    except Exception as e:
+        return e
+
+handler.add_command({
+    'trigger': '!meme',
+    'function': function_meme,
+    'number_args': 0,
+    'args_val': [],
+    'desc': 'Sends a meme from custom search to user'
 })
 
 @client.event  # event decorator/wrapper (anytime some event is going to occur)
