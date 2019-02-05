@@ -82,7 +82,7 @@ def function_meme(message, client, args):
         if resp.status_code != 200:
             raise ApiError('Get error {} {}'.format(resp.status_code, resp.reason))
 
-        meme = resp.json()["items"][randint(1, 10)]["link"]
+        meme = resp.json()["items"][randint(0, 9)]["link"]
         return meme
 
     except ApiError as a:
