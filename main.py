@@ -98,6 +98,21 @@ handler.add_command({
     'desc': 'Sends a meme from custom search to user'
 })
 
+def function_curtis(message, client, args):
+    try:
+        if(message.channel.id == '540688507199553557'):
+            return "{} get on".format('@201909896357216256>')
+    except Exception as e:
+        return e
+
+handler.add_command({
+    'trigger': '!curtis',
+    'function': function_curtis,
+    'number_args': 0,
+    'args_val': [],
+    'desc': 'Pings curtis'
+})
+
 @client.event  # event decorator/wrapper (anytime some event is going to occur)
 async def on_ready():
     try:
