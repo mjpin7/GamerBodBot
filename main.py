@@ -101,7 +101,7 @@ handler.add_command({
 def function_curtis(message, client, args):
     try:
         if(message.channel.id == '540688507199553557'):
-            return "{} get on".format('@201909896357216256>')
+            return "{} get on".format('<@201909896357216256>')
     except Exception as e:
         return e
 
