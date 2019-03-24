@@ -77,16 +77,7 @@ handler.add_command({
 #
 def function_meme(message, client, args):
     try:
-        resp = requests.get('https://www.googleapis.com/customsearch/v1?key={}&cx={}&q=meme&searchType=image&num=10&start={}'.format(os.environ.get('GOOGLEKEY'), os.environ.get('GOOGLE_SEARCH_ID'), randint(1, 100)))
-
-        if resp.status_code != 200:
-            raise ApiError('Get error {} {}'.format(resp.status_code, resp.reason))
-
-        meme = resp.json()["items"][randint(0, 9)]["link"]
-        return meme
-
-    except ApiError as a:
-        return a
+        return "Coming soon :)"
     except Exception as e:
         return e
 
@@ -95,23 +86,48 @@ handler.add_command({
     'function': function_meme,
     'number_args': 0,
     'args_val': [],
-    'desc': 'Sends a meme from custom search to user'
+    'desc': 'Sends a meme to user (DOES NOT WORK ATM)'
 })
 
-def function_curtis(message, client, args):
+# Function to handle the commands command
+#
+# Returns a list of the commands
+def function_commands(self, message, client, args):
     try:
-        if(message.channel.id == '540688507199553557'):
-            return "{} get on".format('<@201909896357216256>')
+        response = "Commands:\n```"
+        
+        for command in self.commands:
+            resonse += "{}: {}\n".format(command['trigger'], command['desc'])
+
+        response+= "```"
+
+        return response
     except Exception as e:
+        return e
+    
+handler.add_command({
+    'trigger': '!commands',
+    'function': function_commands,
+    'number_args': 0,
+    'args_val': [],
+    'desc': 'Lists commands'
+})
+
+# Function to handle the help command
+def function_help(message, client, args):
+    try:
+        return "Type in command as\"!<command>\" or type in \"!commands for list of commands\""
+    except  Exception as e:
         return e
 
 handler.add_command({
-    'trigger': '!curtis',
-    'function': function_curtis,
+    'trigger': '!chelp',
+    'function': function_help,
     'number_args': 0,
     'args_val': [],
-    'desc': 'Pings curtis'
+    'desc': 'Helps user'
 })
+
 
 @client.event  # event decorator/wrapper (anytime some event is going to occur)
 async def on_ready():
