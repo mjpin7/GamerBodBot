@@ -121,7 +121,7 @@ def function_help(message, client, args):
         return e
 
 handler.add_command({
-    'trigger': '!chelp',
+    'trigger': '!help',
     'function': function_help,
     'number_args': 0,
     'args_val': [],
