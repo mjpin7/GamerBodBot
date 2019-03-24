@@ -116,7 +116,7 @@ handler.add_command({
 # Function to handle the help command
 def function_help(message, client, args):
     try:
-        return "Type in command as ```!<command>``` or type in ```!commands``` for list of commands
+        return "Type in command as ```!<command>``` or type in ```!commands``` for list of commands"
     except  Exception as e:
         return e
 
