@@ -94,15 +94,14 @@ handler.add_command({
 # Returns a list of the commands
 def function_commands(self, message, client, args):
     try:
-        response = []
-        response.append("Commands:\n```")
+        response = "Commands:\n```"
         
         for command in self.commands:
-            response.append("{}: {}\n".format(command['trigger'], command['desc']))
+            response += "{}: {}\n".format(command['trigger'], command['desc'])
 
-        response.append("```")
-        
-        return ''.join(response)
+        response+= "```"
+
+        return response
     except Exception as e:
         return e
     
