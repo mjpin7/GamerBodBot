@@ -57,7 +57,7 @@ handler = CommandHandle(client)
 ## ALL FUNCTIONS FOR COMMANDS GO HERE WITH HANDLER BELOW RESPECTIVE FUNCTION
 
 # Simple function for hello command
-def function_greetings(message, client, args):
+def function_greetings(self, message, client, args):
     try:
         return "Hello {}".format(message.author.mention)
     except Exception as e:
@@ -75,7 +75,7 @@ handler.add_command({
 #
 # References the google custom search api and a created custom google search to search multiple sites for a meme. Returns a random image.
 #
-def function_meme(message, client, args):
+def function_meme(self, message, client, args):
     try:
         resp = requests.get("https://gamerbodbot-api.herokuapp.com/", headers={"Authorization": "Bearer" + os.environ.get('JWT_TOKEN')})
 
@@ -123,7 +123,7 @@ handler.add_command({
 })
 
 # Function to handle the help command
-def function_help(message, client, args):
+def function_help(self, message, client, args):
     try:
         return "Type in command as ```!<command>``` or type in ```!commands``` for list of commands"
     except  Exception as e:
