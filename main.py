@@ -82,6 +82,7 @@ def function_meme(self, message, client, args):
         if resp.status_code !=200:
             raise ApiError('Get /tasks/ {}'.format(resp.status_code))
 
+
         meme = resp.json()["Meme"]
         return meme
 
