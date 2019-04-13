@@ -77,7 +77,16 @@ handler.add_command({
 #
 def function_meme(message, client, args):
     try:
-        return "Coming soon :)"
+        resp = requests.get("https://gamerbodbot-api.herokuapp.com/", headers={"Authorization": "Bearer" + os.environ.get('JWT_TOKEN')})
+
+        if resp.status_code !=200:
+            raise ApiError('Get /tasks/ {}'.format(resp.status_code))
+
+        meme = resp.json()["Meme"]
+        return meme
+
+    except ApiError as a:
+        return a
     except Exception as e:
         return e
 
