@@ -56,7 +56,6 @@ handler = CommandHandle(client)
 
 def refresh_token():
     resp = requests.get("https://gamerbodbot-api.herokuapp.com/refresh", headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
-    os.environ['JWT_TOKEN'] = resp.json()['access_token']
 
 ## ALL FUNCTIONS FOR COMMANDS GO HERE WITH HANDLER BELOW RESPECTIVE FUNCTION
 
@@ -92,8 +91,6 @@ def function_meme(self, message, client, args):
             else:
                 raise ApiError('Get error {}. Message contents: ```javascript\n{}\n```'.format(resp.status_code, resp.json()))
             
-
-
         meme = resp.json()["Meme"]
         return meme
 
