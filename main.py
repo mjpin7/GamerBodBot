@@ -77,13 +77,18 @@ handler.add_command({
 #
 def function_meme(self, message, client, args):
     try:
+        # Refresh token
+        resp = requests.get("https://gamerbodbot-api.herokuapp.com/refresh", headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
+        os.environ["JWT_TOKEN"] = resp["access_token"]
+
+        # Make request for the meme
         resp = requests.get("https://gamerbodbot-api.herokuapp.com/meme", headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
 
         if resp.status_code != 200:
             if resp.status_code == 401:
-                raise ApiError('Get error {}, unauthorized. Message contents: ```JSON\n{}\n```'.format(resp.status_code, resp.json()))
+                raise ApiError('Get error {}, unauthorized. Message contents: ```javascript\n{}\n```'.format(resp.status_code, resp.json()))
             else:
-                raise ApiError('Get error {}. Message contents: ```JSON\n{}\n```'.format(resp.status_code, resp.json()))
+                raise ApiError('Get error {}. Message contents: ```javascript\n{}\n```'.format(resp.status_code, resp.json()))
             
 
 
