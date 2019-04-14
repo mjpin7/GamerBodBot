@@ -54,6 +54,10 @@ client = discord.Client()
 # Create the CommandHandle object passing in the client
 handler = CommandHandle(client)
 
+def refresh_token():
+    resp = requests.get("https://gamerbodbot-api.herokuapp.com/refresh", headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
+    os.environ['JWT_TOKEN'] = resp.json()['access_token']
+
 ## ALL FUNCTIONS FOR COMMANDS GO HERE WITH HANDLER BELOW RESPECTIVE FUNCTION
 
 # Simple function for hello command
@@ -77,9 +81,7 @@ handler.add_command({
 #
 def function_meme(self, message, client, args):
     try:
-        # Refresh token
-        resp1 = requests.get("https://gamerbodbot-api.herokuapp.com/refresh", headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
-        os.environ["JWT_TOKEN"] = str(resp1.json()["access_token"])
+        refresh_token()
 
         # Make request for the meme
         resp = requests.get("https://gamerbodbot-api.herokuapp.com/meme", headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
