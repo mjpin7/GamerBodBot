@@ -81,9 +81,9 @@ def function_meme(self, message, client, args):
 
         if resp.status_code != 200:
             if resp.status_code == 401:
-                raise ApiError('Get error {}, unauthorized. Token may be expired'.format(resp.status_code))
+                raise ApiError('Get error {}, unauthorized. Message contents: ```JSON\n{}\n```'.format(resp.status_code, resp.json()))
             else:
-                raise ApiError('Get error {}'.format(resp.status_code))
+                raise ApiError('Get error {}. Message contents: ```JSON\n{}\n```'.format(resp.status_code, resp.json()))
             
 
 
