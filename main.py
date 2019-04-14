@@ -79,8 +79,12 @@ def function_meme(self, message, client, args):
     try:
         resp = requests.get("https://gamerbodbot-api.herokuapp.com/meme", headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
 
-        if resp.status_code !=200:
-            raise ApiError('Get /tasks/ {}'.format(resp.status_code))
+        if resp.status_code != 200:
+            if resp.status_code == 401:
+                raise ApiError('Get error {}, unauthorized. Token may be expired'.format(resp.status_code))
+            else:
+                raise ApiError('Get error {}'.format(resp.status_code))
+            
 
 
         meme = resp.json()["Meme"]
@@ -96,7 +100,7 @@ handler.add_command({
     'function': function_meme,
     'number_args': 0,
     'args_val': [],
-    'desc': 'Sends a meme to user (DOES NOT WORK ATM)'
+    'desc': 'Sends a meme to user'
 })
 
 # Function to handle the commands command
