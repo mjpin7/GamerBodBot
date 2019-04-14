@@ -79,7 +79,7 @@ def function_meme(self, message, client, args):
     try:
         # Refresh token
         resp = requests.get("https://gamerbodbot-api.herokuapp.com/refresh", headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
-        os.environ["JWT_TOKEN"] = resp["access_token"]
+        os.environ["JWT_TOKEN"] = resp.json()["access_token"]
 
         # Make request for the meme
         resp = requests.get("https://gamerbodbot-api.herokuapp.com/meme", headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
