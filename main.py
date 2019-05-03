@@ -154,7 +154,7 @@ def function_backlog_add(self, message, client, args):
     try:
         resp = requests.post("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(args[0]), "status": "unplayed"}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
 
-        if resp.status_code != 201:
+        if resp.status_code != 200:
             if resp.status_code == 401:
                 raise ApiError('Get error {}, unauthorized. Message contents: ```javascript\n{}\n```'.format(resp.status_code, resp.json()))
             else:
