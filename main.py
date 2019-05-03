@@ -160,7 +160,7 @@ def function_backlog_add(self, message, client, args):
             else:
                 raise ApiError('Get error {}. Message contents: ```javascript\n{}\n```'.format(resp.status_code, resp.json()))
         
-        return resp.json()
+        return resp.json()['message']
     except ApiError as a:
         return a
     except Exception as e:
