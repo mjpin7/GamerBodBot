@@ -119,7 +119,7 @@ def function_commands(self, message, client, args):
             for arg in command['args_val']:
                 response += " <{}>".format(arg)
 
-            response += ": {}".format(command['desc'])
+            response += ": {}\n".format(command['desc'])
 
         response+= "```"
 
