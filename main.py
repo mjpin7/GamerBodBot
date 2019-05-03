@@ -175,6 +175,55 @@ handler.add_command({
     'desc': 'Adds a backlog item to the users backlog'
 })
 
+def function_playing(self, message, client, args):
+    try:
+        resp = requests.put("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(args[0]), "status": "playing"}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
+
+        if resp.status_code != 200:
+            if resp.status_code == 401:
+                raise ApiError('Get error {}, unauthorized. Message contents: ```javascript\n{}\n```'.format(resp.status_code, resp.json()))
+            else:
+                raise ApiError('Get error {}. Message contents: ```javascript\n{}\n```'.format(resp.status_code, resp.json()))
+        
+        return resp.json()['message']
+    except ApiError as a:
+        return a
+    except Exception as e:
+        return e
+
+
+handler.add_command({
+    'trigger': '!playing',
+    'function': function_playing,
+    'number_args': 1,
+    'args_val': ['game'],
+    'desc': 'Changes a backlog item passed in to status: playing'
+})
+
+def function_finished(self, message, client, args):
+    try:
+        resp = requests.put("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(args[0]), "status": "finished"}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
+
+        if resp.status_code != 200:
+            if resp.status_code == 401:
+                raise ApiError('Get error {}, unauthorized. Message contents: ```javascript\n{}\n```'.format(resp.status_code, resp.json()))
+            else:
+                raise ApiError('Get error {}. Message contents: ```javascript\n{}\n```'.format(resp.status_code, resp.json()))
+        
+        return resp.json()['message']
+    except ApiError as a:
+        return a
+    except Exception as e:
+        return e
+
+
+handler.add_command({
+    'trigger': '!finished',
+    'function': function_finished,
+    'number_args': 1,
+    'args_val': ['game'],
+    'desc': 'Changes a backlog item passed in to status: finished'
+})
 
 @client.event  # event decorator/wrapper (anytime some event is going to occur)
 async def on_ready():
