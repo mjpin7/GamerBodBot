@@ -113,7 +113,13 @@ def function_commands(self, message, client, args):
         response = "Commands:\n```"
         
         for command in self.commands:
-            response += "{}: {}\n".format(command['trigger'], command['desc'])
+            response += command['trigger']
+
+            # Add the args (if any) to the response
+            for arg in command['args_val']:
+                response += " <{}>".format(arg)
+
+            response += ": {}".format(command['desc'])
 
         response+= "```"
 
@@ -142,6 +148,31 @@ handler.add_command({
     'number_args': 0,
     'args_val': [],
     'desc': 'Helps user'
+})
+
+def function_backlog_add(self, message, client, args):
+    try:
+        resp = requests.post("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={'game': args[0], 'status': 'unplayed'}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
+
+        if resp.status_code != 201:
+            if resp.status_code == 401:
+                raise ApiError('Get error {}, unauthorized. Message contents: ```javascript\n{}\n```'.format(resp.status_code, resp.json()))
+            else:
+                raise ApiError('Get error {}. Message contents: ```javascript\n{}\n```'.format(resp.status_code, resp.json()))
+        
+        return resp.json()
+    except ApiError as a:
+        return a
+    except Exception as e:
+        return e
+
+
+handler.add_command({
+    'trigger': '!backlogadd',
+    'function': function_backlog_add,
+    'number_args': 1,
+    'args_val': ['game'],
+    'desc': 'Adds a backlog item to the users backlog'
 })
 
 
