@@ -152,7 +152,7 @@ handler.add_command({
 
 def function_backlog_add(self, message, client, args):
     try:
-        resp = requests.post("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={'game': args[0], 'status': 'unplayed'}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN'), "content-type": 'application/json'})
+        resp = requests.post("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={'game': '{}'.format(args[0]), 'status': 'unplayed'}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN'), "content-type": 'application/json'})
 
         if resp.status_code != 201:
             if resp.status_code == 401:
