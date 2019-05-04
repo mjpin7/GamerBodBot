@@ -186,7 +186,7 @@ handler.add_command({
     'function': function_backlog,
     'number_args': 1,
     'args_val': ['add/finished/playing', 'game'],
-    'desc': 'Command to interact (add, finsih, update) backlog items'
+    'desc': 'Command to interact (add, finish, update) backlog items'
 })
 
 @client.event  # event decorator/wrapper (anytime some event is going to occur)
