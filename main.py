@@ -86,8 +86,7 @@ def function_commands(self, message, client, args):
 
             # Add the args (if any) to the response
             if command['trigger'] == "!backlog":
-                response += " {} <{}>\n".format(command['args_val'][0], command['args_val'][1])
-                response += "{} <{}>".format(command['trigger'], command['args_val'][1])
+                response += " {} <{}>".format(command['args_val'][0], command['args_val'][1])
             else:
                 for arg in command['args_val']:
                     response += " <{}>".format(arg)
@@ -157,19 +156,19 @@ handler.add_command({
 
 def function_backlog(self, message, client, args):
     try:
-        if args[0] == "add":
-            # If game has multiple work titles, join the multiple words from args list
-            game = ' '.join(args[1:])
+        # If game has multiple work titles, join the multiple words from args list
+        game = ' '.join(args[1:])
 
+        if args[0] == "add":
             resp = requests.post("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(game), "status": "unplayed"}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
         elif args[0] == "finished":
-            resp = requests.put("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(args[1]), "status": "finished"}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
+            resp = requests.put("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(game), "status": "finished"}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
         elif args[0] == "playing":
-            resp = requests.put("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(args[1]), "status": "playing"}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
+            resp = requests.put("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(game), "status": "playing"}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
         elif args[0] == "all":
             pass
-        else:
-            resp = requests.get("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(args[0])}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
+        elif args[0] == "view":
+            resp = requests.get("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(game)}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
 
         if resp.status_code != 200:
             if resp.status_code == 401:
@@ -188,7 +187,7 @@ handler.add_command({
     'trigger': '!backlog',
     'function': function_backlog,
     'number_args': 1,
-    'args_val': ['add/finished/playing', 'game'],
+    'args_val': ['add/finished/playing/view', 'game'],
     'desc': 'Command to interact (add, finish, update, get) backlog items'
 })
 
