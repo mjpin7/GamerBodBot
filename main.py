@@ -159,7 +159,7 @@ def function_backlog(self, message, client, args):
     try:
         if args[0] == "add":
             # If game has multiple work titles, join the multiple words from args list
-            game = args[1:].join(' ')
+            game = ' '.join(args[1:])
 
             resp = requests.post("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(game), "status": "unplayed"}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
         elif args[0] == "finished":
