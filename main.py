@@ -167,9 +167,9 @@ def function_backlog(self, message, client, args):
             resp = requests.put("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(game), "status": "playing"}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
         elif args[0] == "view":
             if args[1] == "all":
-                resp = requests.get("https://gamerbodbot-api.herokuapp.com/backloglist/{}".format(message.author.display_name), data={"game": "{}".format(game)}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
+                resp = requests.get("https://gamerbodbot-api.herokuapp.com/backloglist/{}".format(message.author.display_name), headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
                 continue
-                
+
             resp = requests.get("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(game)}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
 
         if resp.status_code != 200:
