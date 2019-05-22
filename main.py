@@ -157,7 +157,8 @@ handler.add_command({
 def function_backlog(self, message, client, args):
     try:
         # If game has multiple work titles, join the multiple words from args list
-        game = ' '.join(args[1:])
+        if args[1] != "all":
+            game = ' '.join(args[1:])
 
         if args[0] == "add":
             resp = requests.post("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(game), "status": "unplayed"}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
@@ -168,9 +169,8 @@ def function_backlog(self, message, client, args):
         elif args[0] == "view":
             if args[1] == "all":
                 resp = requests.get("https://gamerbodbot-api.herokuapp.com/backloglist/{}".format(message.author.display_name), headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
-                continue
-
-            resp = requests.get("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(game)}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
+            else:
+                resp = requests.get("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(game)}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
 
         if resp.status_code != 200:
             if resp.status_code == 401:
