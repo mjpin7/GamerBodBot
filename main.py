@@ -86,7 +86,7 @@ def function_commands(self, message, client, args):
 
             # Add the args (if any) to the response
             if command['trigger'] == "!backlog":
-                response += " {} <{}>".format(command['args_val'][0], command['args_val'][1])
+                response += " {} <{}>/all".format(command['args_val'][0], command['args_val'][1])
             else:
                 for arg in command['args_val']:
                     response += " <{}>".format(arg)
