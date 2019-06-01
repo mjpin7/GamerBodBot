@@ -180,6 +180,12 @@ def function_backlog(self, message, client, args):
                     message = resp.json()['message']
             else:
                 message = 'Command argument "{}" not valid. Type !help to help'.format(args[0])
+
+            if resp.status_code != 200:
+                if resp.status_code == 401:
+                    raise ApiError('Get error {}, unauthorized. Message contents: ```javascript\n{}\n```'.format(resp.status_code, resp.json()))
+                else:
+                    raise ApiError('Get error {}. Message contents: ```javascript\n{}\n```'.format(resp.status_code, resp.json()))
         else:
             if args[0] == "view":
                 message = 'Command arguments not valid. Try "!backlog view all", "!backlog view <game>" or type "!help" for more help.'
@@ -191,16 +197,6 @@ def function_backlog(self, message, client, args):
                 message = 'Command arguments not valid. Missing game, try "!backlog playing <game>".'
             else:
                 message = "Command argument not valid. Valid arguments are view, add, finished and playing."
-
-
-
-        
-
-        if resp.status_code != 200:
-            if resp.status_code == 401:
-                raise ApiError('Get error {}, unauthorized. Message contents: ```javascript\n{}\n```'.format(resp.status_code, resp.json()))
-            else:
-                raise ApiError('Get error {}. Message contents: ```javascript\n{}\n```'.format(resp.status_code, resp.json()))
 
         return message
     except ApiError as a:
