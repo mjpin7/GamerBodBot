@@ -189,6 +189,8 @@ def function_backlog(self, message, client, args):
                 message = 'Command arguments not valid. Missing game, try "!backlog finished <game>".'
             elif args[0] == "playing":
                 message = 'Command arguments not valid. Missing game, try "!backlog playing <game>".'
+            else:
+                message = "Command argument not valid. Valid arguments are view, add, finished and playing."
 
 
 
