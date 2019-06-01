@@ -157,7 +157,7 @@ handler.add_command({
 def function_backlog(self, message, client, args):
     try:
         # If game has multiple work titles, join the multiple words from args list
-        if args[1] != "all":
+        if args[1] != "all" and args[1]:
             game = ' '.join(args[1:])
 
         if args[0] == "add":
