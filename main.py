@@ -41,7 +41,7 @@ class CommandHandle:
                         if len(args) >= command['number_args']:
                             return self.client.send_message(message.channel, str(command['function'](self, message, self.client, args)))
                         else:
-                            return self.client.send_message(message.channel, 'command "{}" requires {} argument(s): "{}"'.format(command['trigger'], command['number_args'], ', '.join(command['args_val'])))
+                            return self.client.send_message(message.channel, 'command "{}" requires at least {} argument(s): "{}"'.format(command['trigger'], command['number_args'], ', '.join(command['args_val'])))
                 else:
                     break
 
