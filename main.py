@@ -156,30 +156,43 @@ handler.add_command({
 
 def function_backlog(self, message, client, args):
     try:
-        # If game has multiple work titles, join the multiple words from args list
-        if args[1] != "all" and args[1]:
-            game = ' '.join(args[1:])
+        
+        if(args[1]):
+            # If game has multiple word titles, join the multiple words from args list
+            if args[1] != "all":
+                game = ' '.join(args[1:])
 
-        if args[0] == "add":
-            resp = requests.post("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(game), "status": "unplayed"}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
-            message = resp.json()['message']
-        elif args[0] == "finished":
-            resp = requests.put("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(game), "status": "finished"}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
-            message = resp.json()['message']
-        elif args[0] == "playing":
-            resp = requests.put("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(game), "status": "playing"}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
-            message = resp.json()['message']
-        elif args[0] == "view":
-            if args[1] == "all":
-                resp = requests.get("https://gamerbodbot-api.herokuapp.com/backloglist/{}".format(message.author.display_name), headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
+            if args[0] == "add":
+                resp = requests.post("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(game), "status": "unplayed"}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
                 message = resp.json()['message']
-            elif not game:
-                message = 'Command argument "view" not valid. Try "!backlog view <game>", "!backlog view all" or type "!help" for help.'
+            elif args[0] == "finished":
+                resp = requests.put("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(game), "status": "finished"}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
+                message = resp.json()['message']
+            elif args[0] == "playing":
+                resp = requests.put("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(game), "status": "playing"}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
+                message = resp.json()['message']
+            elif args[0] == "view":
+                if args[1] == "all":
+                    resp = requests.get("https://gamerbodbot-api.herokuapp.com/backloglist/{}".format(message.author.display_name), headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
+                    message = resp.json()['message']
+                else:
+                    resp = requests.get("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(game)}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
+                    message = resp.json()['message']
             else:
-                resp = requests.get("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(game)}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
-                message = resp.json()['message']
+                message = 'Command argument "{}" not valid. Type !help to help'.format(args[0])
         else:
-            message = 'Command argumant "{}" not valid. Type !help to help'.format(args[1])
+            if args[0] == "view":
+                message = 'Command arguments not valid. Try "!backlog view all", "!backlog view <game>" or type "!help" for more help.'
+            elif args[0] == "add":
+                message = 'Command arguments not valid. Missing game, try "!backlog add <game>".'
+            elif args[0] == "finished":
+                message = 'Command arguments not valid. Missing game, try "!backlog finished <game>".'
+            elif args[0] == "playing":
+                message = 'Command arguments not valid. Missing game, try "!backlog playing <game>".'
+
+
+
+        
 
         if resp.status_code != 200:
             if resp.status_code == 401:
