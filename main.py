@@ -162,23 +162,32 @@ def function_backlog(self, message, client, args):
 
         if args[0] == "add":
             resp = requests.post("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(game), "status": "unplayed"}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
+            message = resp.json()['message']
         elif args[0] == "finished":
             resp = requests.put("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(game), "status": "finished"}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
+            message = resp.json()['message']
         elif args[0] == "playing":
             resp = requests.put("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(game), "status": "playing"}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
+            message = resp.json()['message']
         elif args[0] == "view":
             if args[1] == "all":
                 resp = requests.get("https://gamerbodbot-api.herokuapp.com/backloglist/{}".format(message.author.display_name), headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
+                message = resp.json()['message']
+            elif not game:
+                message = 'Command argument "view" not valid. Try "!backlog view <game>", "!backlog view all" or type "!help" for help.'
             else:
                 resp = requests.get("https://gamerbodbot-api.herokuapp.com/backlog/{}".format(message.author.display_name), data={"game": "{}".format(game)}, headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
+                message = resp.json()['message']
+        else:
+            message = 'Command argumant "{}" not valid. Type !help to help'.format(args[1])
 
         if resp.status_code != 200:
             if resp.status_code == 401:
                 raise ApiError('Get error {}, unauthorized. Message contents: ```javascript\n{}\n```'.format(resp.status_code, resp.json()))
             else:
                 raise ApiError('Get error {}. Message contents: ```javascript\n{}\n```'.format(resp.status_code, resp.json()))
-        
-        return resp.json()['message']
+
+        return message
     except ApiError as a:
         return a
     except Exception as e:
