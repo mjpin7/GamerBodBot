@@ -216,7 +216,7 @@ handler.add_command({
 # Simple function for hello command
 def function_test(self, message, client, args):
     try:
-        message.author.send("Hello, this is to test the messaging functionality :D")
+        await message.author.send("Hello, this is to test the messaging functionality :D")
     except Exception as e:
         return e
     
