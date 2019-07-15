@@ -33,15 +33,26 @@ class CommandHandle:
                 if args[0] == command['trigger']:
                     args.pop(0)
 
-                    # If there are no arguments in the selected command, return the response
-                    if command['number_args'] == 0:
-                        return self.client.send_message(command['type'], str(command['function'](self, message, self.client, args)))
-                    else:
-                        # If there are a correct number of arguments, return a response. Else return an error message
-                        if len(args) >= command['number_args']:
-                            return self.client.send_message(command['type'], str(command['function'](self, message, self.client, args)))
+                    if command['type'] == 'public':
+                        # If there are no arguments in the selected command, return the response
+                        if command['number_args'] == 0:
+                            return self.client.send_message(message.channel, str(command['function'](self, message, self.client, args)))
                         else:
-                            return self.client.send_message(command['type'], 'command "{}" requires at least {} argument(s): "{}"'.format(command['trigger'], command['number_args'], ', '.join(command['args_val'])))
+                            # If there are a correct number of arguments, return a response. Else return an error message
+                            if len(args) >= command['number_args']:
+                                return self.client.send_message(message.channel, str(command['function'](self, message, self.client, args)))
+                            else:
+                                return self.client.send_message(message.channel, 'command "{}" requires at least {} argument(s): "{}"'.format(command['trigger'], command['number_args'], ', '.join(command['args_val'])))
+                    else:
+                        # If there are no arguments in the selected command, return the response
+                        if command['number_args'] == 0:
+                            return self.client.send_message(message.author, str(command['function'](self, message, self.client, args)))
+                        else:
+                            # If there are a correct number of arguments, return a response. Else return an error message
+                            if len(args) >= command['number_args']:
+                                return self.client.send_message(message.author, str(command['function'](self, message, self.client, args)))
+                            else:
+                                return self.client.send_message(message.author, 'command "{}" requires at least {} argument(s): "{}"'.format(command['trigger'], command['number_args'], ', '.join(command['args_val'])))
                 else:
                     break
 
@@ -72,7 +83,7 @@ handler.add_command({
     'number_args': 0,
     'args_val': [],
     'desc': 'Sends greetings to the user',
-    'type': message.channel
+    'type': 'public'
 })
 
 # Function to handle the commands command
@@ -107,7 +118,7 @@ handler.add_command({
     'number_args': 0,
     'args_val': [],
     'desc': 'Lists commands',
-    'type': 'message.channel'
+    'type': 'public'
 })
 
 # Function to handle the help command
@@ -155,7 +166,7 @@ handler.add_command({
     'number_args': 0,
     'args_val': [],
     'desc': 'Sends a meme to user',
-    'type': 'message.channel'
+    'type': 'public'
 })
 
 def function_backlog(self, message, client, args):
@@ -215,7 +226,7 @@ handler.add_command({
     'number_args': 1,
     'args_val': ['add/finished/playing/view', 'game'],
     'desc': 'Command to interact (add, finish, update, get) backlog items',
-    'type': 'message.channel'
+    'type': 'public'
 })
 
 # Simple function for hello command
@@ -231,7 +242,7 @@ handler.add_command({
     'number_args': 0,
     'args_val': [],
     'desc': 'Command to test functionality of PMing users',
-    'type': 'message.author'
+    'type': 'private'
 })
 
 @client.event  # event decorator/wrapper (anytime some event is going to occur)
