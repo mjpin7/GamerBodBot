@@ -72,7 +72,7 @@ handler.add_command({
     'number_args': 0,
     'args_val': [],
     'desc': 'Sends greetings to the user',
-    'type': 'message.channel'
+    'type': message.channel
 })
 
 # Function to handle the commands command
