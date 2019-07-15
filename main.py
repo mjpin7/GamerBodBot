@@ -213,6 +213,21 @@ handler.add_command({
     'desc': 'Command to interact (add, finish, update, get) backlog items'
 })
 
+# Simple function for hello command
+def function_test(self, message, client, args):
+    try:
+        message.author.send("Hello, this is to test the messaging functionality :D")
+    except Exception as e:
+        return e
+    
+handler.add_command({
+    'trigger': '!test',
+    'function': function_test,
+    'number_args': 0,
+    'args_val': [],
+    'desc': 'Command to test functionality of PMing users'
+})
+
 @client.event  # event decorator/wrapper (anytime some event is going to occur)
 async def on_ready():
     try:
