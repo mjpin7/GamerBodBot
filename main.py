@@ -46,13 +46,13 @@ class CommandHandle:
                     else:
                         # If there are no arguments in the selected command, return the response
                         if command['number_args'] == 0:
-                            return message.author.dm_channel.send(str(command['function'](self, message, self.client, args)))
+                            return message.author.send(str(command['function'](self, message, self.client, args)))
                         else:
                             # If there are a correct number of arguments, return a response. Else return an error message
                             if len(args) >= command['number_args']:
-                                return message.author.dm_channel.send(message.author, str(command['function'](self, message, self.client, args)))
+                                return message.author.send(message.author, str(command['function'](self, message, self.client, args)))
                             else:
-                                return message.author.dm_channel.send(message.author, 'command "{}" requires at least {} argument(s): "{}"'.format(command['trigger'], command['number_args'], ', '.join(command['args_val'])))
+                                return message.author.send(message.author, 'command "{}" requires at least {} argument(s): "{}"'.format(command['trigger'], command['number_args'], ', '.join(command['args_val'])))
                 else:
                     break
 
@@ -276,17 +276,14 @@ async def on_message(message):
     else:
         try:
             if message.content.startswith('!test'):
-                if message.author.dm_channel is None:
-                    message.author.create_dm()
-
-                message.author.dm_channel.send("You have started a new game of hangman, please respond with the word you would like to use:")
+                await message.author.send("You have started a new game of hangman, please respond with the word you would like to use:")
 
                 def pred(m):
                     return m.author == message.author and m.channel == message.channel
 
                 msg = await client.wait_for('message', check=pred)
 
-                msg.channel.send(msg.content)
+                 await msg.channel.send(msg.content)
             else:
                 await handler.handle_command(message)
 
