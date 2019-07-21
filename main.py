@@ -281,8 +281,26 @@ handler.add_command({
 })
 
 # Simple function for hello command
-def function_test(self, message, client, args):
+async def function_test(self, message, client, args):
     try:
+        await message.author.send("You have started a new game of hangman, please respond with the word you would like to use:")
+
+        def pred(m):
+            return m.author == message.author and m.channel == message.author.dm_channel
+
+        msg = await client.wait_for('message', check=pred)
+
+        await msg.author.send("You have chosen the word: '{}'. Game starting in channel {}.".format(msg.content, message.channel))
+
+        resp = "```"
+        resp += '_ ' * len(msg.content)
+        resp += '\n\n{}```'.format(HANGMANPICS[0])
+        
+        
+
+        await message.channel.send("New game of hangman started by {}.".format(message.author.mention))
+        await message.channel.send(resp)
+
         return "Hello, this is to test the messaging functionality :D"
     except Exception as e:
         return e
@@ -326,27 +344,27 @@ async def on_message(message):
         pass
     else:
         try:
-            if message.content.startswith('!test'):
-                await message.author.send("You have started a new game of hangman, please respond with the word you would like to use:")
+            #if message.content.startswith('!test'):
+            #    await message.author.send("You have started a new game of hangman, please respond with the word you would like to use:")
+#
+ #               def pred(m):
+  #                  return m.author == message.author and m.channel == message.author.dm_channel
 
-                def pred(m):
-                    return m.author == message.author and m.channel == message.author.dm_channel
-
-                msg = await client.wait_for('message', check=pred)
-
-                await msg.author.send("You have chosen the word: '{}'. Game starting in channel {}.".format(msg.content, message.channel))
-
-                resp = "```"
-                resp += '_ ' * len(msg.content)
-                resp += '\n\n{}```'.format(HANGMANPICS[0])
-                
-                
-
-                await message.channel.send("New game of hangman started by {}.".format(message.author.mention))
-                await message.channel.send(resp)
-            else:
-                await handler.handle_command(message)
-
+#               msg = await client.wait_for('message', check=pred)
+#
+ #               await msg.author.send("You have chosen the word: '{}'. Game starting in channel {}.".format(msg.content, message.channel))
+#
+#                resp = "```"
+ #               resp += '_ ' * len(msg.content)
+  #              resp += '\n\n{}```'.format(HANGMANPICS[0])
+   #             
+    #            
+#
+ #               await message.channel.send("New game of hangman started by {}.".format(message.author.mention))
+  #              await message.channel.send(resp)
+   #         else:
+    #            await handler.handle_command(message)
+        await handler.handle_command(message)
         # Message does not have a command, just pass
         except TypeError as t:
             pass
