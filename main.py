@@ -36,23 +36,23 @@ class CommandHandle:
                     if command['type'] == 'public':
                         # If there are no arguments in the selected command, return the response
                         if command['number_args'] == 0:
-                            return self.client.send_message(message.channel, str(command['function'](self, message, self.client, args)))
+                            return message.channel.send(str(command['function'](self, message, self.client, args)))
                         else:
                             # If there are a correct number of arguments, return a response. Else return an error message
                             if len(args) >= command['number_args']:
-                                return self.client.send_message(message.channel, str(command['function'](self, message, self.client, args)))
+                                return message.channel.send(str(command['function'](self, message, self.client, args)))
                             else:
-                                return self.client.send_message(message.channel, 'command "{}" requires at least {} argument(s): "{}"'.format(command['trigger'], command['number_args'], ', '.join(command['args_val'])))
+                                return message.channel.send(message.channel, 'command "{}" requires at least {} argument(s): "{}"'.format(command['trigger'], command['number_args'], ', '.join(command['args_val'])))
                     else:
                         # If there are no arguments in the selected command, return the response
                         if command['number_args'] == 0:
-                            return self.client.send_message(message.author, str(command['function'](self, message, self.client, args)))
+                            return message.author.dm_channel.send(str(command['function'](self, message, self.client, args)))
                         else:
                             # If there are a correct number of arguments, return a response. Else return an error message
                             if len(args) >= command['number_args']:
-                                return self.client.send_message(message.author, str(command['function'](self, message, self.client, args)))
+                                return message.author.dm_channel.send(message.author, str(command['function'](self, message, self.client, args)))
                             else:
-                                return self.client.send_message(message.author, 'command "{}" requires at least {} argument(s): "{}"'.format(command['trigger'], command['number_args'], ', '.join(command['args_val'])))
+                                return message.author.dm_channel.send(message.author, 'command "{}" requires at least {} argument(s): "{}"'.format(command['trigger'], command['number_args'], ', '.join(command['args_val'])))
                 else:
                     break
 
@@ -276,14 +276,14 @@ async def on_message(message):
     else:
         try:
             if message.content.startswith('!test'):
-                client.send_message(message.author, "New game of hangman started, please respond with the word to use:")
+                message.author.dm_channel.send("New game of hangman started, please respond with the word to use:")
 
                 def pred(m):
                     return m.author == message.author and m.channel == message.channel
 
                 msg = await client.wait_for('message', check=pred)
 
-                client.send_message(message.author, msg.content)
+                msg.channel.send(msg.content)
             else:
                 await handler.handle_command(message)
 
