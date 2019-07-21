@@ -283,7 +283,7 @@ async def on_message(message):
 
                 msg = await client.wait_for('message', check=pred)
 
-                await msg.channel.send(msg.content)
+                await msg.author.send(msg.content)
             else:
                 await handler.handle_command(message)
 
