@@ -364,7 +364,7 @@ async def on_message(message):
   #              await message.channel.send(resp)
    #         else:
     #            await handler.handle_command(message)
-        await handler.handle_command(message)
+            await handler.handle_command(message)
         # Message does not have a command, just pass
         except TypeError as t:
             pass
