@@ -248,7 +248,7 @@ handler.add_command({
 # Simple function for hello command
 def function_vers(self, message, client, args):
     try:
-        return discord.version_info
+        return discord.__version__
     except Exception as e:
         return e
     
