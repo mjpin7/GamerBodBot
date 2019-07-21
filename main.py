@@ -87,7 +87,7 @@ class CommandHandle:
                     if command['type'] == 'public':
                         # If there are no arguments in the selected command, return the response
                         if command['number_args'] == 0:
-                            return message.channel.send(str(command['function'](self, message, self.client, args)))
+                            return await message.channel.send(str(command['function'](self, message, self.client, args)))
                         else:
                             # If there are a correct number of arguments, return a response. Else return an error message
                             if len(args) >= command['number_args']:
