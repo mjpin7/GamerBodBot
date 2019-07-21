@@ -245,6 +245,22 @@ handler.add_command({
     'type': 'private'
 })
 
+# Simple function for hello command
+def function_vers(self, message, client, args):
+    try:
+        return discord.version_info
+    except Exception as e:
+        return e
+    
+handler.add_command({
+    'trigger': '!vers',
+    'function': function_vers,
+    'number_args': 0,
+    'args_val': [],
+    'desc': 'Command to check version summary (for testing)',
+    'type': 'public'
+})
+
 @client.event  # event decorator/wrapper (anytime some event is going to occur)
 async def on_ready():
     try:
@@ -264,7 +280,7 @@ async def on_message(message):
 
                 def pred(m):
                     return m.author == message.author and m.channel == message.channel
-                    
+
                 msg = await client.wait_for('message', check=pred)
 
                 client.send_message(message.author, msg.content)
