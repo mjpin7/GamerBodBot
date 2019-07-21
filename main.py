@@ -75,7 +75,7 @@ class CommandHandle:
     #
     # @Param message        The message to handle
     #
-    def handle_command(self, message):
+    async def handle_command(self, message):
         for command in self.commands:
             if message.content.startswith(command['trigger']):
                 args = message.content.split(' ')
@@ -105,7 +105,7 @@ class CommandHandle:
                             else:
                                 return message.author.send(message.author, 'command "{}" requires at least {} argument(s): "{}"'.format(command['trigger'], command['number_args'], ', '.join(command['args_val'])))
                     else:
-                        command['function'](self, message, self.client, args)
+                        await command['function'](self, message, self.client, args)
                 else:
                     break
 
