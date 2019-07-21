@@ -261,7 +261,12 @@ async def on_message(message):
         try:
             if message.content.startswith('!test'):
                 client.send_message(message.author, "New game of hangman started, please respond with the word to use:")
-                msg = await client.wait_for_message(author=message.author, channel=message.author.dm_channel)
+
+                def pred(m):
+                    return m.author == message.author and m.channel == message.channel
+                    
+                msg = await client.wait_for('message', check=pred)
+
                 client.send_message(message.author, msg.content)
             else:
                 await handler.handle_command(message)
