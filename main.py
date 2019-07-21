@@ -279,7 +279,7 @@ async def on_message(message):
                 await message.author.send("You have started a new game of hangman, please respond with the word you would like to use:")
 
                 def pred(m):
-                    return m.author == message.author and m.channel == message.channel
+                    return m.author == message.author and m.channel == message.author.dm_channel
 
                 msg = await client.wait_for('message', check=pred)
 
