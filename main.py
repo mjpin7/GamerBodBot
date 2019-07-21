@@ -105,7 +105,7 @@ class CommandHandle:
                             else:
                                 return message.author.send(message.author, 'command "{}" requires at least {} argument(s): "{}"'.format(command['trigger'], command['number_args'], ', '.join(command['args_val'])))
                     else:
-                        await command['function'](self, message, self.client, args)
+                        return await command['function'](self, message, self.client, args)
                 else:
                     break
 
@@ -302,6 +302,8 @@ async def function_test(self, message, client, args):
 
         await message.channel.send("New game of hangman started by {}.".format(message.author.mention))
         await message.channel.send(resp)
+
+        return "Done"
     except Exception as e:
         return e
     
