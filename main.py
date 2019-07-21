@@ -283,7 +283,7 @@ async def on_message(message):
 
                 msg = await client.wait_for('message', check=pred)
 
-                await msg.author.send(msg.content)
+                await msg.author.send("You have chosen the word: '" + msg.content + "'. Game starting in channel " + message.channel + ".")
             else:
                 await handler.handle_command(message)
 
