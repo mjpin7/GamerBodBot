@@ -4,6 +4,57 @@ import requests
 from random import randint
 import json
 
+HANGMANPICS = ['''
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ /    |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ / \  |
+      |
+=========''']
+
 class ApiError(Exception):
     pass
 
@@ -287,7 +338,9 @@ async def on_message(message):
 
                 resp = "```"
                 resp += '_ ' * len(msg.content)
-                resp += '```\n\n'
+                resp += '\n\n{}```'.format(HANGMANPICS[0])
+                
+                
 
                 await message.channel.send("New game of hangman started by {}.".format(message.author.mention))
                 await message.channel.send(resp)
