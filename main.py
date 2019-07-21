@@ -94,7 +94,7 @@ class CommandHandle:
                                 return message.channel.send(str(command['function'](self, message, self.client, args)))
                             else:
                                 return message.channel.send(message.channel, 'command "{}" requires at least {} argument(s): "{}"'.format(command['trigger'], command['number_args'], ', '.join(command['args_val'])))
-                    else:
+                    elif command['type'] == 'private':
                         # If there are no arguments in the selected command, return the response
                         if command['number_args'] == 0:
                             return message.author.send(str(command['function'](self, message, self.client, args)))
@@ -104,6 +104,8 @@ class CommandHandle:
                                 return message.author.send(message.author, str(command['function'](self, message, self.client, args)))
                             else:
                                 return message.author.send(message.author, 'command "{}" requires at least {} argument(s): "{}"'.format(command['trigger'], command['number_args'], ', '.join(command['args_val'])))
+                    else:
+                        command['function'](self, message, self.client, args)
                 else:
                     break
 
@@ -300,8 +302,6 @@ async def function_test(self, message, client, args):
 
         await message.channel.send("New game of hangman started by {}.".format(message.author.mention))
         await message.channel.send(resp)
-
-        return "Hello, this is to test the messaging functionality :D"
     except Exception as e:
         return e
     
@@ -311,7 +311,7 @@ handler.add_command({
     'number_args': 0,
     'args_val': [],
     'desc': 'Command to test functionality of PMing users',
-    'type': 'private'
+    'type': 'special'
 })
 
 # Simple function for hello command
