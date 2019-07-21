@@ -276,7 +276,10 @@ async def on_message(message):
     else:
         try:
             if message.content.startswith('!test'):
-                message.author.dm_channel.send("New game of hangman started, please respond with the word to use:")
+                if message.author.dm_channel is None:
+                    message.author.create_dm()
+
+                message.author.dm_channel.send("You have started a new game of hangman, please respond with the word you would like to use:")
 
                 def pred(m):
                     return m.author == message.author and m.channel == message.channel
