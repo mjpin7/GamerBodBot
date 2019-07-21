@@ -259,7 +259,12 @@ async def on_message(message):
         pass
     else:
         try:
-            await handler.handle_command(message)
+            if message.content.startswith('!test'):
+                client.send_message(message.author, "New game of hangman started, please respond with the word to use:")
+                msg = await client.wait_for_message(author=message.author, channel=message.author.dm_channel)
+                client.send_message(message.author, msg.content)
+            else:
+                await handler.handle_command(message)
 
         # Message does not have a command, just pass
         except TypeError as t:
