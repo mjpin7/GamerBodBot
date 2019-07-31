@@ -4,6 +4,9 @@ import requests
 from random import randint
 import json
 
+######################## GLOBAL VARIABLES AND FUNCTIONS ########################
+hangman = False
+
 HANGMANPICS = ['''
   +---+
   |   |
@@ -54,6 +57,27 @@ HANGMANPICS = ['''
  / \  |
       |
 =========''']
+
+# Function to replace the nth occurence of a substring
+# s: the string to do the ops on
+# f: the substring to find
+# repl: the string to replace the substring with
+# n: The occurence to replace
+def replace_nth(s, f, repl, n):
+    find = s.find(f)
+    i = find != -1
+
+    while find != -1 and i != n:
+        find = s.find(f, find + 1)
+        i += 1
+
+    if i == n:
+        return s[:find] + repl + s[find + len(f):]
+    
+    return s
+
+
+######################## CLASSES ########################
 
 class ApiError(Exception):
     pass
@@ -121,7 +145,8 @@ handler = CommandHandle(client)
 def refresh_token():
     resp = requests.get("https://gamerbodbot-api.herokuapp.com/refresh", headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
 
-## ALL FUNCTIONS FOR COMMANDS GO HERE WITH HANDLER BELOW RESPECTIVE FUNCTION
+
+######################## ALL FUNCTIONS FOR COMMANDS GO HERE WITH HANDLER BELOW RESPECTIVE FUNCTION ########################
 
 # Simple function for hello command
 def function_greetings(self, message, client, args):
@@ -187,7 +212,7 @@ handler.add_command({
     'number_args': 0,
     'args_val': [],
     'desc': 'Helps user',
-    'type': 'message.channel'
+    'type': 'public'
 })
 
 # Function to handle the meme command
@@ -285,25 +310,58 @@ handler.add_command({
 # Simple function for hello command
 async def function_test(self, message, client, args):
     try:
-        await message.author.send("You have started a new game of hangman, please respond with the word you would like to use:")
+        if hangman:
+            await message.channel.send("Game of hangman in progress, can not start a new one")
+            return
+        else:
+            hangman = True
+            guess = 0
+            await message.author.send("You have started a new game of hangman, please respond with the word you would like to use:")
 
-        def pred(m):
-            return m.author == message.author and m.channel == message.author.dm_channel
+            def pred(m):
+                return m.author == message.author and m.channel == message.author.dm_channel
 
-        msg = await client.wait_for('message', check=pred)
+            msg = await client.wait_for('message', check=pred)
+            word = msg.content.lower()
 
-        await msg.author.send("You have chosen the word: '{}'. Game starting in channel {}.".format(msg.content, message.channel))
+            await msg.author.send("You have chosen the word: '{}'. Game starting in channel {}.".format(word, message.channel))
 
-        resp = "```"
-        resp += '_ ' * len(msg.content)
-        resp += '\n\n{}```'.format(HANGMANPICS[0])
-        
-        
+            resp = "```"
+            resp += '_ ' * len(word)
+            resp += '\n\n{}```'.format(HANGMANPICS[guess])
+            
+            
 
-        await message.channel.send("New game of hangman started by {}.".format(message.author.mention))
-        await message.channel.send(resp)
+            await message.channel.send("New game of hangman started by {}.".format(message.author.mention))
+            await message.channel.send(resp)
 
-        return "Done"
+            # To make sure the character gotten is one character and in the alphabet
+            def pred1(m):
+                return m.channel == message.channel and len(m.content) == 1 and m.content.isalpha()
+
+            resp = '_ ' * len(word)
+
+            # While the game is still going on, listen for a message
+            while hangman and guess <= 6:
+                msg = await client.wait_for('message', check=pred1)
+                charGuess = msg.content.lower()
+
+                # If the response from user is in the word
+                if charGuess in word:
+                    occur = word.count(charGuess)
+                    # Find the places the character occurs
+                    places = [i for i, a in enumerate(word) if a == charGuess]
+
+                    # For each place, replace the underscore with the character
+                    for place in places:
+                        replace_nth(resp, '_', charGuess, place)
+                else:
+                    guess += 1
+                    await message.channel.send("Guess \"{}\" from {} was incorrect, guess again!".format(charGuess, msg.author.mention))
+                
+                await message.channel.send("```{}\n\n{}```.".format(resp, HANGMANPICS[guess]))
+
+            return "Done"
     except Exception as e:
         return e
     
