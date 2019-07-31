@@ -342,7 +342,7 @@ async def function_test(self, message, client, args):
             resp = '_ ' * len(word)
 
             # While the game is still going on, listen for a message
-            while hangman and guess <= 6:
+            while resp.count('_') != 0 and guess <= 6:
                 msg = await client.wait_for('message', check=pred1)
                 charGuess = msg.content.lower()
 
@@ -360,7 +360,8 @@ async def function_test(self, message, client, args):
                     await message.channel.send("Guess \"{}\" from {} was incorrect, guess again!".format(charGuess, msg.author.mention))
                 
                 await message.channel.send("```{}\n\n{}```.".format(resp, HANGMANPICS[guess]))
-
+            
+            hangman = False
             return "Done"
     except Exception as e:
         return e
