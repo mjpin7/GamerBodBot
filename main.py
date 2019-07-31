@@ -58,25 +58,6 @@ HANGMANPICS = ['''
       |
 =========''']
 
-# Function to replace the nth occurence of a substring
-# s: the string to do the ops on
-# f: the substring to find
-# repl: the string to replace the substring with
-# n: The occurence to replace
-def replace_nth(s, f, repl, n):
-    find = s.find(f)
-    i = find
-
-    while find != -1 and i != n:
-        find = s.find(f, find + 1)
-        i += 1
-
-    if i == n:
-        return s[:find] + repl + s[find + len(repl):]
-    
-    return s
-
-
 ######################## CLASSES ########################
 
 class ApiError(Exception):
@@ -317,6 +298,7 @@ async def function_test(self, message, client, args):
         else:
             hangman = True
             guess = 0
+            guessed = []
             await message.author.send("You have started a new game of hangman, please respond with the word you would like to use:")
 
             def pred(m):
@@ -346,22 +328,23 @@ async def function_test(self, message, client, args):
             while resp.count('_') != 0 and guess <= 6:
                 msg = await client.wait_for('message', check=pred1)
                 charGuess = msg.content.lower()
+                guessed.append(charGuess)
 
-                # If the response from user is in the word
-                if charGuess in word:
-                    occur = word.count(charGuess)
-                    # Find the places the character occurs
-                    places = [i for i, a in enumerate(word) if a == charGuess]
-
-                    # For each place, replace the underscore with the character
-                    for place in places:
-                         resp = replace_nth(resp, '_', charGuess, place)
-                else:
+                # If the response from user is not in the word
+                if charGuess not in word:
                     guess += 1
                     await message.channel.send("Guess \"{}\" from {} was incorrect, guess again!".format(charGuess, msg.author.mention))
                 
-                await message.channel.send("```{}\n\n{}```.".format(resp, HANGMANPICS[guess]))
+                resp = ''.join(c if c in guessed else '_ ' for c in word)
+                    
+                
+                await message.channel.send("```{}\n\nIncorrect Guesses: {}\n\n{}```".format(resp, guess, HANGMANPICS[guess]))
             
+            if guess >= 6:
+                await message.channel.send("You did not get it, {} wins! The word was \"{}\"".format(message.author.mention, word))
+            else:
+                await message.channel.send("You got it! The word was \"{}\"".format(word))
+                    
             hangman = False
             return "Done"
     except Exception as e:
