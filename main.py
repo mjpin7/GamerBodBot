@@ -65,14 +65,14 @@ HANGMANPICS = ['''
 # n: The occurence to replace
 def replace_nth(s, f, repl, n):
     find = s.find(f)
-    i = find != -1
+    i = find
 
     while find != -1 and i != n:
         find = s.find(f, find + 1)
         i += 1
 
     if i == n:
-        return s[:find] + repl + s[find + len(f):]
+        return s[:find] + repl + s[find + len(repl):]
     
     return s
 
@@ -355,7 +355,7 @@ async def function_test(self, message, client, args):
 
                     # For each place, replace the underscore with the character
                     for place in places:
-                        replace_nth(resp, '_', charGuess, place)
+                         resp = replace_nth(resp, '_', charGuess, place)
                 else:
                     guess += 1
                     await message.channel.send("Guess \"{}\" from {} was incorrect, guess again!".format(charGuess, msg.author.mention))
