@@ -309,6 +309,7 @@ handler.add_command({
 
 # Simple function for hello command
 async def function_test(self, message, client, args):
+    global hangman
     try:
         if hangman:
             await message.channel.send("Game of hangman in progress, can not start a new one")
