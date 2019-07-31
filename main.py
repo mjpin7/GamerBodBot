@@ -341,7 +341,7 @@ async def function_test(self, message, client, args):
                 await message.channel.send("```{}\n\nIncorrect Guesses: {}\n\n{}```".format(resp, guess, HANGMANPICS[guess]))
             
             if guess >= 6:
-                await message.channel.send("You did not get it :PepeHands: , {} wins! The word was \"{}\"".format(message.author.mention, word))
+                await message.channel.send("You did not get it :PepeHands: The word was \"{}\"".format(word))
             else:
                 await message.channel.send("You got it! The word was \"{}\" :tada: :tada: ".format(word))
 
