@@ -296,57 +296,62 @@ async def function_hangman(self, message, client, args):
             await message.channel.send("Game of hangman in progress, can not start a new one")
             return
         else:
-            hangman = True
-            guess = 0
-            guessed = []
-            await message.author.send("You have started a new game of hangman, please respond with the word you would like to use:")
+            if message.channel.name == 'games':
+                hangman = True
+                guess = 0
+                guessed = []
+                await message.author.send("You have started a new game of hangman, please respond with the word you would like to use:")
 
-            def pred(m):
-                return m.author == message.author and m.channel == message.author.dm_channel
+                def pred(m):
+                    return m.author == message.author and m.channel == message.author.dm_channel
 
-            msg = await client.wait_for('message', check=pred)
-            word = msg.content.lower()
+                msg = await client.wait_for('message', check=pred)
+                word = msg.content.lower()
 
-            await msg.author.send("You have chosen the word: '{}'. Game starting in channel {}.".format(word, message.channel))
+                await msg.author.send("You have chosen the word: '{}'. Game starting in channel {}.".format(word, message.channel))
 
-            resp = "```"
-            resp += '_ ' * len(word)
-            resp += '\n\n{}```'.format(HANGMANPICS[guess])
-            
-            
-
-            await message.channel.send("New game of hangman started by {}.".format(message.author.mention))
-            await message.channel.send(resp)
-
-            # To make sure the character gotten is one character and in the alphabet
-            def pred1(m):
-                return m.channel == message.channel and len(m.content) == 1 and m.content.isalpha()
-
-            resp = '_ ' * len(word)
-
-            # While the game is still going on, listen for a message
-            while resp.count('_') != 0 and guess < 6:
-                msg = await client.wait_for('message', check=pred1)
-                charGuess = msg.content.lower()
-                guessed.append(charGuess)
-
-                # If the response from user is not in the word
-                if charGuess not in word:
-                    guess += 1
-                    await message.channel.send("Guess \"{}\" from {} was incorrect, guess again!".format(charGuess, msg.author.mention))
+                resp = "```"
+                resp += '_ ' * len(word)
+                resp += '\n\n{}```'.format(HANGMANPICS[guess])
                 
-                resp = ''.join(c+' ' if c in guessed else '_ ' for c in word)
+                
+
+                await message.channel.send("New game of hangman started by {}.".format(message.author.mention))
+                await message.channel.send(resp)
+
+                # To make sure the character gotten is one character and in the alphabet
+                def pred1(m):
+                    return m.channel == message.channel and len(m.content) == 1 and m.content.isalpha()
+
+                resp = '_ ' * len(word)
+
+                # While the game is still going on, listen for a message
+                while resp.count('_') != 0 and guess < 6:
+                    msg = await client.wait_for('message', check=pred1)
+                    charGuess = msg.content.lower()
+                    guessed.append(charGuess)
+
+                    # If the response from user is not in the word
+                    if charGuess not in word:
+                        guess += 1
+                        await message.channel.send("Guess \"{}\" from {} was incorrect, guess again!".format(charGuess, msg.author.mention))
                     
+                    resp = ''.join(c+' ' if c in guessed else '_ ' for c in word)
+                        
+                    
+                    await message.channel.send("```{}\n\nIncorrect Guesses: {}\n\n{}```".format(resp, guess, HANGMANPICS[guess]))
                 
-                await message.channel.send("```{}\n\nIncorrect Guesses: {}\n\n{}```".format(resp, guess, HANGMANPICS[guess]))
-            
-            if guess >= 6:
-                await message.channel.send("You did not get it <:PepeHands:538761089136066565> The word was \"{}\"".format(word))
-            else:
-                await message.channel.send("You got it! The word was \"{}\" :tada: :tada: ".format(word))
+                if guess >= 6:
+                    await message.channel.send("You did not get it <:PepeHands:538761089136066565> The word was \"{}\"".format(word))
+                else:
+                    await message.channel.send("You got it! The word was \"{}\" :tada: :tada: ".format(word))
 
-            hangman = False
-            return "Done"
+                hangman = False
+                return "Done"
+            else:
+                game_channel = client.get_channel('606546204825878528')
+                await message.channel.send("Please start the game in {}".format(game_channel.mention))
+            
     except Exception as e:
         return e
     
