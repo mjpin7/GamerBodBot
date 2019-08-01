@@ -296,7 +296,7 @@ async def function_hangman(self, message, client, args):
             await message.channel.send("Game of hangman in progress, can not start a new one")
             return
         else:
-            if message.channel.name == 'games':
+            if message.channel.id == 606546204825878528:
                 hangman = True
                 guess = 0
                 guessed = []
@@ -349,7 +349,7 @@ async def function_hangman(self, message, client, args):
                 hangman = False
                 return "Done"
             else:
-                game_channel = client.get_channel('606546204825878528')
+                game_channel = client.get_channel(606546204825878528)
                 await message.channel.send("Please start the game in {}".format(game_channel.mention))
             
     except Exception as e:
