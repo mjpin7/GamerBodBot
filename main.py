@@ -308,7 +308,7 @@ async def function_hangman(self, message, client, args):
                 msg = await client.wait_for('message', check=pred)
                 words = msg.content.lower().split()
 
-                await msg.author.send("You have chosen the word: '{}'. Game starting in channel {}.".format(word, message.channel))
+                await msg.author.send("You have chosen the word(s): '{}'. Game starting in channel {}.".format(words, message.channel))
 
                 resp = "```"
                 for word in words:
