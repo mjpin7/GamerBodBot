@@ -316,8 +316,7 @@ async def function_hangman(self, message, client, args):
                 
                 
 
-                await message.channel.send("New game of hangman started by {}.".format(message.author.mention))
-                await message.channel.send(resp)
+                await message.channel.send("New game of hangman started by {}\n{}.".format(message.author.mention, resp))
 
                 # To make sure the character gotten is one character and in the alphabet
                 def pred1(m):
