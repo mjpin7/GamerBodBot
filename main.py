@@ -337,13 +337,19 @@ async def function_hangman(self, message, client, args):
                         await message.channel.send("\"{}\" has already been guessed, guess again!".format(charGuess))
                     else:
                         # If the response from user is not in the word
-                        if charGuess not in word:
+                        if charGuess not in words:
                             numGuess += 1
                             await message.channel.send("Guess \"{}\" from {} was incorrect, guess again!".format(charGuess, msg.author.mention))
                         
                         guessed.append(charGuess)
-                    
-                    resp = ''.join(c+' ' if c in guessed else '_ ' for word in words for c in word)
+                        
+
+                    resp = ""
+                    # loop to go through each word and replace with guessed characters, and put extra space between words
+                    for word in words:
+                        resp += ''.join(c+' ' if c in guessed else '_ ' for c in word)
+                        resp += "  "
+                        
                         
                     guesses = ', '.join(guessed)
                     await message.channel.send("```{}\n\nIncorrect Guesses: {}\nYou have guessed: {}\n\n{}```".format(resp, numGuess, guesses, HANGMANPICS[numGuess]))
