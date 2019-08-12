@@ -298,7 +298,7 @@ async def function_hangman(self, message, client, args):
         else:
             if message.channel.id == 606546204825878528 or message.channel.id == 568126260757397508:
                 hangman = True
-                guess = 0
+                numGuess = 0
                 guessed = []
                 await message.author.send("You have started a new game of hangman, please respond with the word you would like to use:")
 
@@ -312,7 +312,7 @@ async def function_hangman(self, message, client, args):
 
                 resp = "```"
                 resp += '_ ' * len(word)
-                resp += '\n\n{}```'.format(HANGMANPICS[guess])
+                resp += '\n\n{}```'.format(HANGMANPICS[numGuess])
                 
                 
 
@@ -325,7 +325,7 @@ async def function_hangman(self, message, client, args):
                 resp = '_ ' * len(word)
 
                 # While the game is still going on, listen for a message
-                while resp.count('_') != 0 and guess < 6:
+                while resp.count('_') != 0 and numGuess < 6:
                     msg = await client.wait_for('message', check=pred1)
                     charGuess = msg.content.lower()
                     guessed.append(charGuess)
@@ -335,15 +335,15 @@ async def function_hangman(self, message, client, args):
                     else:
                         # If the response from user is not in the word
                         if charGuess not in word:
-                            guess += 1
+                            numGuess += 1
                             await message.channel.send("Guess \"{}\" from {} was incorrect, guess again!".format(charGuess, msg.author.mention))
                     
                     resp = ''.join(c+' ' if c in guessed else '_ ' for c in word)
                         
-                    
-                    await message.channel.send("```{}\n\nIncorrect Guesses: {}\nYou have guessed: {}\n\n{}```".format(resp, guess, ', '.join(guessed), HANGMANPICS[guess]))
+                    guesses = ', '.join(guessed)
+                    await message.channel.send("```{}\n\nIncorrect Guesses: {}\nYou have guessed: {}\n\n{}```".format(resp, numGuess, guesses, HANGMANPICS[numGuess]))
                 
-                if guess >= 6:
+                if numGuess >= 6:
                     await message.channel.send("You did not get it <:PepeHands:538761089136066565> The word was \"{}\"".format(word))
                 else:
                     await message.channel.send("You got it! The word was \"{}\" :tada: :tada: ".format(word))
