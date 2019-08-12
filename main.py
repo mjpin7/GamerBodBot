@@ -316,7 +316,7 @@ async def function_hangman(self, message, client, args):
                 
                 
 
-                await message.channel.send("New game of hangman started by {}\n{}.".format(message.author.mention, resp))
+                await message.channel.send("New game of hangman started by {}.\n{}".format(message.author.mention, resp))
 
                 # To make sure the character gotten is one character and in the alphabet
                 def pred1(m):
@@ -331,7 +331,6 @@ async def function_hangman(self, message, client, args):
 
                     if charGuess in guessed:
                         await message.channel.send("\"{}\" has already been guessed, guess again!".format(charGuess))
-                        guessed.append(charGuess)
                     else:
                         # If the response from user is not in the word
                         if charGuess not in word:
