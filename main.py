@@ -339,7 +339,7 @@ async def function_hangman(self, message, client, args):
                     resp = ''.join(c+' ' if c in guessed else '_ ' for c in word)
                         
                     
-                    await message.channel.send("```{}\n\nIncorrect Guesses: {}\n\n{}```".format(resp, guess, HANGMANPICS[guess]))
+                    await message.channel.send("```{}\n\nIncorrect Guesses: {}\nYou have guessed: {}\n\n{}```".format(resp, guess, ', '.join(guessed), HANGMANPICS[guess]))
                 
                 if guess >= 6:
                     await message.channel.send("You did not get it <:PepeHands:538761089136066565> The word was \"{}\"".format(word))
