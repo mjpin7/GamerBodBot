@@ -296,7 +296,7 @@ async def function_hangman(self, message, client, args):
             await message.channel.send("Game of hangman in progress, can not start a new one")
             return
         else:
-            if message.channel.id == 606546204825878528:
+            if message.channel.id == 606546204825878528 or message.channel.id == 568126260757397508:
                 hangman = True
                 guess = 0
                 guessed = []
