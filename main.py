@@ -306,12 +306,14 @@ async def function_hangman(self, message, client, args):
                     return m.author == message.author and m.channel == message.author.dm_channel
 
                 msg = await client.wait_for('message', check=pred)
-                word = msg.content.lower()
+                words = msg.content.lower().split()
 
                 await msg.author.send("You have chosen the word: '{}'. Game starting in channel {}.".format(word, message.channel))
 
                 resp = "```"
-                resp += '_ ' * len(word)
+                for word in words:
+                    resp += '_ ' * len(word)
+                    resp += '  '
                 resp += '\n\n{}```'.format(HANGMANPICS[numGuess])
                 
                 
@@ -322,7 +324,9 @@ async def function_hangman(self, message, client, args):
                 def pred1(m):
                     return m.channel == message.channel and len(m.content) == 1 and m.content.isalpha()
 
-                resp = '_ ' * len(word)
+                for word in words:
+                    resp = '_ ' * len(word)
+                    resp += '  '
 
                 # While the game is still going on, listen for a message
                 while resp.count('_') != 0 and numGuess < 6:
@@ -339,7 +343,7 @@ async def function_hangman(self, message, client, args):
                         
                         guessed.append(charGuess)
                     
-                    resp = ''.join(c+' ' if c in guessed else '_ ' for c in word)
+                    resp = ''.join(c+' ' if c in guessed else '_ ' for word in words for c in word)
                         
                     guesses = ', '.join(guessed)
                     await message.channel.send("```{}\n\nIncorrect Guesses: {}\nYou have guessed: {}\n\n{}```".format(resp, numGuess, guesses, HANGMANPICS[numGuess]))
