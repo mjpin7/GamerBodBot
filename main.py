@@ -331,10 +331,13 @@ async def function_hangman(self, message, client, args):
                     charGuess = msg.content.lower()
                     guessed.append(charGuess)
 
-                    # If the response from user is not in the word
-                    if charGuess not in word:
-                        guess += 1
-                        await message.channel.send("Guess \"{}\" from {} was incorrect, guess again!".format(charGuess, msg.author.mention))
+                    if charGuess in guessed:
+                        await message.channel.send("\"{}\" has already been guessed, guess again!".format(charGuess))
+                    else:
+                        # If the response from user is not in the word
+                        if charGuess not in word:
+                            guess += 1
+                            await message.channel.send("Guess \"{}\" from {} was incorrect, guess again!".format(charGuess, msg.author.mention))
                     
                     resp = ''.join(c+' ' if c in guessed else '_ ' for c in word)
                         
