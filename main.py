@@ -292,7 +292,7 @@ handler.add_command({
 async def function_hangman(self, message, client, args):
     global hangman
     try:
-        if args[0] == 'end':
+        if len(args) > 0 and args[0] == 'end':
             if hangman:
                 hangman = False
                 await message.channel.send("Game of hangman ended")
