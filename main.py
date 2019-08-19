@@ -292,15 +292,17 @@ handler.add_command({
 async def function_hangman(self, message, client, args):
     global hangman
     try:
+        # command to end a current game
         if len(args) > 0 and args[0] == 'end':
             if hangman:
                 hangman = False
                 await message.channel.send("Game of hangman ended")
             else:
                 await message.channel.send("No game has been currently started, type \"!hangman\" to start a new game")
-            
             return   
+        # Command to start game
         else:
+            # If there is already a game going
             if hangman:
                 await message.channel.send("Game of hangman in progress, can not start a new one")
                 return
@@ -311,6 +313,7 @@ async def function_hangman(self, message, client, args):
                     guessed = []
                     await message.author.send("You have started a new game of hangman, please respond with the word you would like to use:")
 
+                    # Get the response from the user who started the game, get answer in dm channel
                     def pred(m):
                         return m.author == message.author and m.channel == message.author.dm_channel
 
@@ -334,9 +337,9 @@ async def function_hangman(self, message, client, args):
 
                     await message.channel.send("New game of hangman started by {}.\n{}".format(message.author.mention, resp))
 
-                    # To make sure the character gotten is one character and in the alphabet
+                    # To make sure the character receieved is one character and in the alphabet
                     def pred1(m):
-                        return m.channel == message.channel and len(m.content) == 1 and m.content.isalpha()
+                        return m.channel == message.channel and len(m.content) == 1 and (m.content.isalpha() or Pattern.matches("\\p{Punct}", m))
 
                     for word in words:
                         resp = '_ ' * len(word)
