@@ -288,10 +288,15 @@ handler.add_command({
     'type': 'public'
 })
 
-# Simple function for hello command
+# Simple function for hangman command
 async def function_hangman(self, message, client, args):
     global hangman
     try:
+        if args[0] == 'end':
+            hangman = False
+            await message.channel.send("Game of hangman ended")
+            return
+
         if hangman:
             await message.channel.send("Game of hangman in progress, can not start a new one")
             return
