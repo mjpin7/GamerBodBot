@@ -3,6 +3,7 @@ import os
 import requests
 from random import randint
 import json
+import string
 
 ######################## GLOBAL VARIABLES AND FUNCTIONS ########################
 hangman = False
@@ -339,7 +340,7 @@ async def function_hangman(self, message, client, args):
 
                     # To make sure the character receieved is one character and in the alphabet
                     def pred1(m):
-                        return m.channel == message.channel and len(m.content) == 1 and (m.content.isalpha() or Pattern.matches("\\p{Punct}", m))
+                        return m.channel == message.channel and len(m.content) == 1 and (m.content.isalpha() or m in string.punctuation)
 
                     for word in words:
                         resp = '_ ' * len(word)
