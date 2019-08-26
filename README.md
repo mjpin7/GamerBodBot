@@ -29,3 +29,7 @@ This repo contains source code for a discord bot for my server GamerBodSquad. It
     - playing `<game>`: Marks `<game>` with status 'playing'
     - view `<game>`: Returns the summary of info for `<game>`
     - view all: Returns the list of the users backlog
+- !hangman
+    - starts a game of hangman
+    - end: Ends a current game, if there is one
+
