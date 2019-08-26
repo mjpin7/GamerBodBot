@@ -347,7 +347,7 @@ async def function_hangman(self, message, client, args):
                         resp += '  '
 
                     # While the game is still going on, listen for a message
-                    while resp.count('_') != 0 and numGuess < 6:
+                    while resp.count('_') != 0 and numGuess < 6 and hangman:
                         # Get guess
                         msg = await client.wait_for('message', check=pred1)
                         charGuess = msg.content.lower()
