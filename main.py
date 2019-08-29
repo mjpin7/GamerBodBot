@@ -289,6 +289,30 @@ handler.add_command({
     'type': 'public'
 })
 
+def function_gif(self, message, client, args):
+    try:
+        # If used a search term
+        if len(args) > 0:
+            tag = ' '.join(args[0:])
+            resp = requests.get("https://api.giphy.com/v1/gifs/random?api_key={}&tag={}".format(os.environ.get('GIPHY_KEY'), tag))
+            return resp.json()['data']['url']
+        # Else just get random
+        else:
+            resp = requests.get("https://api.giphy.com/v1/gifs/random?api_key={}".format(os.environ.get('GIPHY_KEY')))
+            return resp.json()['data']['url']
+    except Exception as e:
+        return e
+
+handler.add_command({
+    'trigger': '!gif',
+    'function': function_gif,
+    'number_args': 0,
+    'args_val': ['tag'],
+    'desc': 'Command to return a totally random, or categoric random gif'
+    'type': 'public'
+
+})
+
 # Simple function for hangman command
 async def function_hangman(self, message, client, args):
     global hangman
