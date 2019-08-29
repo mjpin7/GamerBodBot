@@ -308,7 +308,7 @@ handler.add_command({
     'function': function_gif,
     'number_args': 0,
     'args_val': ['tag'],
-    'desc': 'Command to return a totally random, or categoric random gif'
+    'desc': 'Command to return a totally random, or categoric random gif',
     'type': 'public'
 
 })
