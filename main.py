@@ -198,9 +198,6 @@ handler.add_command({
 })
 
 # Function to handle the meme command
-#
-# References the google custom search api and a created custom google search to search multiple sites for a meme. Returns a random image.
-#
 def function_meme(self, message, client, args):
     try:
         # Make request for the meme
@@ -287,6 +284,30 @@ handler.add_command({
     'args_val': ['add/finished/playing/view', 'game'],
     'desc': 'Command to interact (add, finish, update, get) backlog items',
     'type': 'public'
+})
+
+def function_8ball(self, message, client, args):
+    try:
+        if len(args) == 0:
+            return "No prompt entered, try again"
+
+        reponses = ["It is certain.", "It is decidedly so.", "Without a doubt.", "Yes - definitely.", "You may rely on it.", "Reply hazy, try again.",
+        "Ask again later.", "Better not tell you now.", "Cannot predict now.", "oncentrate and ask again.", "Don't count on it.",
+        "My reply is no.", "My sources say no.", "Outlook not so good.", "Very doubtful."]
+
+        rand_num = randint(0, len(reponses) - 1)
+
+        return responses[rand_num]
+    except Exception as e:
+        return e
+
+handler.add_command({
+    'trigger': '!8ball',
+    'function': function_8ball,
+    'number_args': 0,
+    'args_val'L [],
+    'desc': "Command to return an 8ball response to user",
+    'type': 'puclic'
 })
 
 def function_gif(self, message, client, args):
