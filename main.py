@@ -295,7 +295,7 @@ def function_8ball(self, message, client, args):
             "Ask again later.", "Better not tell you now.", "Cannot predict now.", "oncentrate and ask again.", "Don't count on it.",
             "My reply is no.", "My sources say no.", "Outlook not so good.", "Very doubtful."]
 
-            rand_num = randint(0, len(reponses) - 1)
+            rand_num = randint(0, len(responses) - 1)
 
             message = responses[rand_num]
 
