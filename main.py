@@ -295,11 +295,13 @@ def function_gif(self, message, client, args):
         if len(args) > 0:
             tag = ' '.join(args[0:])
             resp = requests.get("https://api.giphy.com/v1/gifs/random?api_key={}&tag={}".format(os.environ.get('GIPHY_KEY'), tag))
-            return resp.json()['data']['url']
+            url = resp.json()['data']['url']
         # Else just get random
         else:
             resp = requests.get("https://api.giphy.com/v1/gifs/random?api_key={}".format(os.environ.get('GIPHY_KEY')))
-            return resp.json()['data']['url']
+            url = resp.json()['data']['url']
+        
+        return url
     except Exception as e:
         return e
 
