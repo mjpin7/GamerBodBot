@@ -306,10 +306,10 @@ def function_8ball(self, message, client, args):
 handler.add_command({
     'trigger': '!8ball',
     'function': function_8ball,
-    'number_args': 0,
-    'args_val': [],
+    'number_args': 1,
+    'args_val': ['prompt'],
     'desc': "Command to return an 8ball response to user",
-    'type': 'puclic'
+    'type': 'public'
 })
 
 def function_gif(self, message, client, args):
