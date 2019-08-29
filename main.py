@@ -305,7 +305,7 @@ handler.add_command({
     'trigger': '!8ball',
     'function': function_8ball,
     'number_args': 0,
-    'args_val'L [],
+    'args_val': [],
     'desc': "Command to return an 8ball response to user",
     'type': 'puclic'
 })
