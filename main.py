@@ -291,7 +291,7 @@ def function_8ball(self, message, client, args):
         if len(args) == 0:
             message = "No prompt entered, try again"
         else:
-            reponses = ["It is certain.", "It is decidedly so.", "Without a doubt.", "Yes - definitely.", "You may rely on it.", "Reply hazy, try again.",
+            responses = ["It is certain.", "It is decidedly so.", "Without a doubt.", "Yes - definitely.", "You may rely on it.", "Reply hazy, try again.",
             "Ask again later.", "Better not tell you now.", "Cannot predict now.", "oncentrate and ask again.", "Don't count on it.",
             "My reply is no.", "My sources say no.", "Outlook not so good.", "Very doubtful."]
 
