@@ -99,7 +99,7 @@ class CommandHandle:
                             if len(args) >= command['number_args']:
                                 return await message.channel.send(str(command['function'](self, message, self.client, args)))
                             else:
-                                return await message.channel.send(message.channel, 'command "{}" requires at least {} argument(s): "{}"'.format(command['trigger'], command['number_args'], ', '.join(command['args_val'])))
+                                return await message.channel.send('command "{}" requires at least {} argument(s): "{}"'.format(command['trigger'], command['number_args'], ', '.join(command['args_val'])))
                     elif command['type'] == 'private':
                         # If there are no arguments in the selected command, return the response
                         if command['number_args'] == 0:
@@ -107,9 +107,9 @@ class CommandHandle:
                         else:
                             # If there are a correct number of arguments, return a response. Else return an error message
                             if len(args) >= command['number_args']:
-                                return await message.author.send(message.author, str(command['function'](self, message, self.client, args)))
+                                return await message.author.send(str(command['function'](self, message, self.client, args)))
                             else:
-                                return await message.author.send(message.author, 'command "{}" requires at least {} argument(s): "{}"'.format(command['trigger'], command['number_args'], ', '.join(command['args_val'])))
+                                return await message.author.send('command "{}" requires at least {} argument(s): "{}"'.format(command['trigger'], command['number_args'], ', '.join(command['args_val'])))
                     else:
                         return await command['function'](self, message, self.client, args)
                 else:
