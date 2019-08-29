@@ -289,15 +289,17 @@ handler.add_command({
 def function_8ball(self, message, client, args):
     try:
         if len(args) == 0:
-            return "No prompt entered, try again"
+            message = "No prompt entered, try again"
+        else:
+            reponses = ["It is certain.", "It is decidedly so.", "Without a doubt.", "Yes - definitely.", "You may rely on it.", "Reply hazy, try again.",
+            "Ask again later.", "Better not tell you now.", "Cannot predict now.", "oncentrate and ask again.", "Don't count on it.",
+            "My reply is no.", "My sources say no.", "Outlook not so good.", "Very doubtful."]
 
-        reponses = ["It is certain.", "It is decidedly so.", "Without a doubt.", "Yes - definitely.", "You may rely on it.", "Reply hazy, try again.",
-        "Ask again later.", "Better not tell you now.", "Cannot predict now.", "oncentrate and ask again.", "Don't count on it.",
-        "My reply is no.", "My sources say no.", "Outlook not so good.", "Very doubtful."]
+            rand_num = randint(0, len(reponses) - 1)
 
-        rand_num = randint(0, len(reponses) - 1)
+            message = responses[rand_num]
 
-        return responses[rand_num]
+        return message
     except Exception as e:
         return e
 
