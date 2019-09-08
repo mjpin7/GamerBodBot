@@ -485,12 +485,11 @@ async def on_message(message):
         except Exception as e:
             print(e)
 
+@async_to_sync
 async def add_presence(client):
     game = discord.Game("!help")
     await client.change_presence(activity=game)
 
 
 client.run(os.environ.get('TOKEN'))
-loop = asyncio.new_event_loop()
-asyncio.set_event_loop(loop)
-result = loop.run_until_complete(add_presence(client))
+add_presence(client)
