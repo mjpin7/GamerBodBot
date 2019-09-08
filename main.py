@@ -491,4 +491,6 @@ async def add_presence(client):
 
 
 client.run(os.environ.get('TOKEN'))
-add_presence(client)
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
+result = loop.run_until_complete(add_presence(client))
