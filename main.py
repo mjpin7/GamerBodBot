@@ -485,7 +485,10 @@ async def on_message(message):
         except Exception as e:
             print(e)
 
+async def add_presence(client):
+    game = discord.Game("!help")
+    await client.change_presence(activity=game)
+
 
 client.run(os.environ.get('TOKEN'))
-game = discord.Game("!help")
-await client.change_presence(activity=game)
+add_presence(client)
