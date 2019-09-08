@@ -487,4 +487,5 @@ async def on_message(message):
 
 
 client.run(os.environ.get('TOKEN'))
-await client.change_presence(activity=discord.Game(name="!help"))
+game = discord.Game("!help")
+await client.change_presence(activity=game)
