@@ -467,6 +467,7 @@ handler.add_command({
 async def on_ready():
     try:
         print(f"We have logged in as {client.user}")
+        await client.change_presence(activity=discord.Game("!help"))
     except Exception as e:
         print(e)
 
@@ -485,11 +486,4 @@ async def on_message(message):
         except Exception as e:
             print(e)
 
-@async_to_sync
-async def add_presence(client):
-    game = discord.Game("!help")
-    await client.change_presence(activity=game)
-
-
 client.run(os.environ.get('TOKEN'))
-add_presence(client)
