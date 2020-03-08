@@ -466,7 +466,7 @@ handler.add_command({
 # Simple function for hello command
 def function_curt(self, message, client, args):
     try:
-        return (228990687360712716.mention + " ") * 4
+        return (message.guild.get_member(228990687360712716).mention + " ") * 4
     except Exception as e:
         return e
     
