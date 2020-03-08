@@ -450,7 +450,7 @@ handler.add_command({
 # Simple function for hello command
 def function_vers(self, message, client, args):
     try:
-        return discord.__version__
+        await message.channel.send("New game of hangman started by {}.\n{}".format(message.author.mention, resp))
     except Exception as e:
         return e
     
@@ -460,6 +460,22 @@ handler.add_command({
     'number_args': 0,
     'args_val': [],
     'desc': 'Command to check version summary (for testing)',
+    'type': 'public'
+})
+
+# Simple function for hello command
+def function_vcurt(self, message, client, args):
+    try:
+        return (client.get_member(228990687360712716).mention + " ") * 4
+    except Exception as e:
+        return e
+    
+handler.add_command({
+    'trigger': '!curtis',
+    'function': function_curt,
+    'number_args': 0,
+    'args_val': [],
+    'desc': 'Command to ping THE "Crispy n Thin"',
     'type': 'public'
 })
 
