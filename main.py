@@ -450,7 +450,7 @@ handler.add_command({
 # Simple function for hello command
 def function_vers(self, message, client, args):
     try:
-        await message.channel.send("New game of hangman started by {}.\n{}".format(message.author.mention, resp))
+        return discord.__version__
     except Exception as e:
         return e
     
