@@ -232,20 +232,17 @@ handler.add_command({
 # Function to handle the meme generator command
 def function_cmeme(self, message, client, args):
     if len(args) > 0:
-        if args[0] == "list":
-            msg = "The following is a list of the meme templates to choose from in the format <template>: <code to pass in>\n```Bugs Bunny Chungus: chungus\n\nWhisper in ear goosebumps: goosebumps\n\nAight Imma Head Out: imout\n\nYou SOB I'm In (Morty): morty\n\nSpidey Pointing: spidey\n\nCrazy Spongebob: spongec\n\nSpongebob Thinking/Sad: sponges```"
-        else:
-            pass
+        pass
     else:
-        msg = "Command not in correct format. Please type `!cmeme list` to list all the templates or `!cmeme <template> <text>` to generate a meme"
+        msg = "```The following is a list of the meme templates to choose from in the format <template>: <code to pass in>\n\nTo generate a meme, type !cmeme <template> <text>\n\nBugs Bunny Chungus: chungus\n\nWhisper in ear goosebumps: goosebumps\n\nAight Imma Head Out: imout\n\nYou SOB I'm In (Morty): morty\n\nSpidey Pointing: spidey\n\nCrazy Spongebob: spongec\n\nSpongebob Thinking/Sad: sponges```"
 
     return msg
 
 handler.add_command({
     'trigger': '!cmeme',
     'function': function_cmeme,
-    'number_args': 1,
-    'args_val': ['list/template', 'text'],
+    'number_args': 0,
+    'args_val': ['template', 'text'],
     'desc': 'Generates a meme from the passed in template and text',
     'type': 'public'
 })
