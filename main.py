@@ -4,9 +4,9 @@ import requests
 from random import randint
 import json
 import string
-from Pillow import Image
-from Pillow import ImageFont
-from Pillow import ImageDraw
+from PIL import Image
+from PIL import ImageFont
+from PIL import ImageDraw
 
 ######################## GLOBAL VARIABLES AND FUNCTIONS ########################
 hangman = False
