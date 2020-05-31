@@ -226,6 +226,36 @@ handler.add_command({
     'type': 'public'
 })
 
+# Function to handle the meme generator command
+def function_meme(self, message, client, args):
+    # try:
+    #     # Make request for the meme
+    #     resp = requests.get("https://gamerbodbot-api.herokuapp.com/meme", headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
+
+    #     if resp.status_code != 200:
+    #         if resp.status_code == 401:
+    #             raise ApiError('Get error {}, unauthorized. Message contents: ```javascript\n{}\n```'.format(resp.status_code, resp.json()))
+    #         else:
+    #             raise ApiError('Get error {}. Message contents: ```javascript\n{}\n```'.format(resp.status_code, resp.json()))
+            
+    #     meme = resp.json()["Meme"]
+    #     return meme
+
+    # except ApiError as a:
+    #     return a
+    # except Exception as e:
+    #     return e
+    return "Coming Soon"
+
+handler.add_command({
+    'trigger': '!cmeme',
+    'function': function_meme,
+    'number_args': 1,
+    'args_val': ['list', 'template', 'text'],
+    'desc': 'Generates a meme from the passed in template and text',
+    'type': 'public'
+})
+
 def function_backlog(self, message, client, args):
     try:
         
