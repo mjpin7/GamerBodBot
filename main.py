@@ -4,7 +4,9 @@ import requests
 from random import randint
 import json
 import string
-from mememaker import generate
+from Pillow import Image
+from Pillow import ImageFont
+from Pillow import ImageDraw
 
 ######################## GLOBAL VARIABLES AND FUNCTIONS ########################
 hangman = False
