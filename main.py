@@ -251,7 +251,7 @@ handler.add_command({
     'trigger': '!cmeme',
     'function': function_meme,
     'number_args': 1,
-    'args_val': ['list', 'template', 'text'],
+    'args_val': ['list/template', 'text'],
     'desc': 'Generates a meme from the passed in template and text',
     'type': 'public'
 })
