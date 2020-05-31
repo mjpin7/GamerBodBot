@@ -233,14 +233,7 @@ handler.add_command({
 def function_cmeme(self, message, client, args):
     if len(args) > 0:
         if args[0] == "list":
-            msg = """The following is a list of the meme templates to choose from in the format <template>: <code to pass in>\n```
-            Bugs Bunny Chungus: chungus\n\n
-            Whisper in ear goosebumps: goosebumps\n\n
-            Aight Imma Head Out: imout\n\n
-            You SOB I'm In (Morty): morty\n\n
-            Spidey Pointing: spidey\n\n
-            Crazy Spongebob: spongec\n\n
-            Spongebob Thinking/Sad: sponges```"""
+            msg = "The following is a list of the meme templates to choose from in the format <template>: <code to pass in>\n```Bugs Bunny Chungus: chungus\n\nWhisper in ear goosebumps: goosebumps\n\nAight Imma Head Out: imout\n\nYou SOB I'm In (Morty): morty\n\nSpidey Pointing: spidey\n\nCrazy Spongebob: spongec\n\nSpongebob Thinking/Sad: sponges```"
         else:
             pass
     else:
