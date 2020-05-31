@@ -234,7 +234,7 @@ def function_cmeme(self, message, client, args):
     if len(args) > 0:
         pass
     else:
-        msg = "```The following is a list of the meme templates to choose from in the format <template>: <code to pass in>\n\nTo generate a meme, type !cmeme <template> <text>\n\nBugs Bunny Chungus: chungus\n\nWhisper in ear goosebumps: goosebumps\n\nAight Imma Head Out: imout\n\nYou SOB I'm In (Morty): morty\n\nSpidey Pointing: spidey\n\nCrazy Spongebob: spongec\n\nSpongebob Thinking/Sad: sponges```"
+        msg = "```The following is a list of the meme templates to choose from in the format <template>: <code>\n\nTo generate a meme, type !cmeme <code> <text>\n\nBugs Bunny Chungus: chungus\n\nWhisper in ear goosebumps: goosebumps\n\nAight Imma Head Out: imout\n\nYou SOB I'm In (Morty): morty\n\nSpidey Pointing: spidey\n\nCrazy Spongebob: spongec\n\nSpongebob Thinking/Sad: sponges```"
 
     return msg
 
