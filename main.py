@@ -4,6 +4,7 @@ import requests
 from random import randint
 import json
 import string
+from mememaker import generate
 
 ######################## GLOBAL VARIABLES AND FUNCTIONS ########################
 hangman = False
@@ -227,29 +228,27 @@ handler.add_command({
 })
 
 # Function to handle the meme generator command
-def function_meme(self, message, client, args):
-    # try:
-    #     # Make request for the meme
-    #     resp = requests.get("https://gamerbodbot-api.herokuapp.com/meme", headers={"Authorization": "Bearer " + os.environ.get('JWT_TOKEN')})
+def function_cmeme(self, message, client, args):
+    if len(args) > 0:
+        if args[0] == "list":
+            msg = """The following is a list of the meme templates to choose from in the format <template>: <code to pass in>\n```
+            Bugs Bunny Chungus: chungus\n\n
+            Whisper in ear goosebumps: goosebumps\n\n
+            Aight Imma Head Out: imout\n\n
+            You SOB I'm In (Morty): morty\n\n
+            Spidey Pointing: spidey\n\n
+            Crazy Spongebob: spongec\n\n
+            Spongebob Thinking/Sad: sponges"""
+        else:
+            pass
+    else:
+        msg = "Command not in correct format. Please type `!cmeme list` to list all the templates or `!cmeme <template> <text>` to generate a meme"
 
-    #     if resp.status_code != 200:
-    #         if resp.status_code == 401:
-    #             raise ApiError('Get error {}, unauthorized. Message contents: ```javascript\n{}\n```'.format(resp.status_code, resp.json()))
-    #         else:
-    #             raise ApiError('Get error {}. Message contents: ```javascript\n{}\n```'.format(resp.status_code, resp.json()))
-            
-    #     meme = resp.json()["Meme"]
-    #     return meme
-
-    # except ApiError as a:
-    #     return a
-    # except Exception as e:
-    #     return e
-    return "Coming Soon"
+    return msg
 
 handler.add_command({
     'trigger': '!cmeme',
-    'function': function_meme,
+    'function': function_cmeme,
     'number_args': 1,
     'args_val': ['list/template', 'text'],
     'desc': 'Generates a meme from the passed in template and text',
