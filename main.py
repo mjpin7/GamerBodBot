@@ -240,7 +240,7 @@ def function_cmeme(self, message, client, args):
             You SOB I'm In (Morty): morty\n\n
             Spidey Pointing: spidey\n\n
             Crazy Spongebob: spongec\n\n
-            Spongebob Thinking/Sad: sponges"""
+            Spongebob Thinking/Sad: sponges```"""
         else:
             pass
     else:
