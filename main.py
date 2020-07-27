@@ -506,13 +506,13 @@ async def manage_reaction(reaction, user, added):
         pass
     else:
         message_id = reaction.message.id
+        print("{} reacted".format(user))
 
         if reaction.message.channel.id != 737441218044100739:
             pass
         else:
             member = discord.utils.get(reaction.message.guild.members, id=user.id)
             role = discord.utils.get(reaction.message.guild.roles, name="DJ")
-            print("{} reacted".format(member))
             if added:
                 await member.add_roles(role)
             else:
