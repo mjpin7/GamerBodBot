@@ -512,7 +512,7 @@ async def manage_reaction(reaction, user, added):
         else:
             member = discord.utils.get(reaction.message.guild.members, id=user.id)
             role = discord.utils.get(reaction.message.guild.roles, name="DJ")
-
+            print("{} reacted".format(member))
             if added:
                 await member.add_roles(role)
             else:
