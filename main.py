@@ -506,14 +506,17 @@ async def manage_reaction(reaction, user, added):
         pass
     else:
         message_id = reaction.message.id
+        
 
         member = discord.utils.get(reaction.message.guild.members, id=user.id)
         role = discord.utils.get(reaction.message.guild.roles, name="test")
 
+        print("{} reacted".format(member))
+
         if added:
-            await member.add_roles(member, role)
+            await member.add_roles(role)
         else:
-            await member.remove_roles(member, role)
+            await member.remove_roles(role)
 
 
 @client.event  # event decorator/wrapper (anytime some event is going to occur)
