@@ -500,7 +500,7 @@ handler.add_command({
     'type': 'public'
 })
 
-async def manage_reaction(self, reaction, user, added):
+async def manage_reaction(reaction, user, added):
     message_id = reaction.message.id
 
     member = discord.utils.get(reaction.message.guild.members, id=user.id)
@@ -524,11 +524,11 @@ async def on_ready():
 
 @client.event
 async def on_reaction_add(reaction, user):
-    await manage_reaction(self, reaction, user, True)
+    await manage_reaction(reaction, user, True)
 
 @client.event
 async def on_reaction_remove(reaction, user):
-    await manage_reaction(self, reaction, user, False)
+    await manage_reaction(reaction, user, False)
 
 @client.event
 async def on_message(message):
