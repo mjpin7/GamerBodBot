@@ -501,15 +501,19 @@ handler.add_command({
 })
 
 async def manage_reaction(reaction, user, added):
+
+    if reaction.message.author == client.user:
+        pass
+        
     message_id = reaction.message.id
 
     member = discord.utils.get(reaction.message.guild.members, id=user.id)
     role = discord.utils.get(reaction.message.guild.roles, id=737425471343427745)
 
     if added:
-        await client.add_roles(member, role)
+        await member.add_roles(member, role)
     else:
-        await client.remove_roles(member, role)
+        await member.remove_roles(member, role)
 
 
 @client.event  # event decorator/wrapper (anytime some event is going to occur)
