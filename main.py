@@ -505,8 +505,24 @@ async def on_ready():
     try:
         print(f"We have logged in as {client.user}")
         await client.change_presence(activity=discord.Activity(name="you for !help", type=discord.ActivityType.listening))
+        message = await client.get_channel(568126260757397508).send("Please react with <:gotem:553362170134659082> to get role")
+        await message.add_reaction("<:gotem:553362170134659082>")
     except Exception as e:
         print(e)
+
+@client.event
+def on_reaction_add(reaction, user):
+    if reaction.message.channel.id == 568126260757397508:
+        if reaction.emoji == "<:gotem:553362170134659082>":
+            test_role = client.get_guild(509448892065120276).get_role(737425471343427745)
+            await user.add_roles(test_role)
+
+@client.event
+def on_reaction_remove(reaction, user):
+    if reaction.message.channel.id == 568126260757397508:
+        if reaction.emoji == "<:gotem:553362170134659082>":
+            test_role = client.get_guild(509448892065120276).get_role(737425471343427745)
+            await user.remove_roles(test_role)
 
 @client.event
 async def on_message(message):
