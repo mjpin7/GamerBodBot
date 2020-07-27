@@ -503,7 +503,7 @@ handler.add_command({
 async def manage_reaction(reaction, user, added):
     info_dict = {
         737443156785627186: 
-            🎵: DJ
+            musical_note: DJ
     }
 
     if user == client.user:
@@ -511,6 +511,7 @@ async def manage_reaction(reaction, user, added):
     else:
         message_id = reaction.message.id
         mapping = info_dict[message_id]
+        print(reaction.emoji)
 
         if not reaction.emoji in mapping:
             pass
