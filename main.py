@@ -500,6 +500,18 @@ handler.add_command({
     'type': 'public'
 })
 
+async def manage_reaction(self, reaction, user, added):
+    message_id = reaction.message.id
+
+    member = discord.utils.get(reaction.message.guild.members, id=user.id)
+    role = discord.utils.get(reaction.message.guild.roles, id=737425471343427745)
+
+    if added:
+        await client.add_roles(member, role)
+    else:
+        await client.remove_roles(member, role)
+
+
 @client.event  # event decorator/wrapper (anytime some event is going to occur)
 async def on_ready():
     try:
@@ -511,18 +523,12 @@ async def on_ready():
         print(e)
 
 @client.event
-def on_reaction_add(reaction, user):
-    if reaction.message.channel.id == 568126260757397508:
-        if reaction.emoji == "<:gotem:553362170134659082>":
-            test_role = client.get_guild(509448892065120276).get_role(737425471343427745)
-            await user.add_roles(test_role)
+async def on_reaction_add(reaction, user):
+    await manage_reaction(self, reaction, user, True)
 
 @client.event
-def on_reaction_remove(reaction, user):
-    if reaction.message.channel.id == 568126260757397508:
-        if reaction.emoji == "<:gotem:553362170134659082>":
-            test_role = client.get_guild(509448892065120276).get_role(737425471343427745)
-            await user.remove_roles(test_role)
+async def on_reaction_remove(reaction, user):
+    await manage_reaction(self, reaction, user, False)
 
 @client.event
 async def on_message(message):
