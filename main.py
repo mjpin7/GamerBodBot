@@ -503,7 +503,7 @@ handler.add_command({
 async def manage_reaction(reaction, user, added):
 
     if user == client.user:
-        pass
+        print("Client")
     else:
         message_id = reaction.message.id
         print("{} reacted".format(user))
