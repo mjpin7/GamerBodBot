@@ -504,7 +504,7 @@ handler.add_command({
 async def on_ready():
     try:
         print(f"We have logged in as {client.user}")
-        client.activity(discord.CustomActivity("Type !help for help"))
+        await client.change_presence(activity=discord.CustomActivity(name="Type !help for help"))
     except Exception as e:
         print(e)
 
