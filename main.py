@@ -501,29 +501,22 @@ handler.add_command({
 })
 
 async def manage_reaction(reaction, user, added):
-    info_dict = {
-        737443156785627186: {
-            "musical_note": "DJ"
-        }
-    }
 
     if user == client.user:
-        pass
+        print("Bot {} reacted".format(reaction.message.author))
     else:
         message_id = reaction.message.id
-        #mapping = info_dict[message_id]
-        print(reaction.emoji.name)
+        
 
-        # if not reaction.emoji in mapping:
-        #     pass
-        # else:
-        #     member = discord.utils.get(reaction.message.guild.members, id=user.id)
-        #     role = discord.utils.get(reaction.message.guild.roles, name=mapping[reaction.emoji])
+        member = discord.utils.get(reaction.message.guild.members, id=user.id)
+        role = discord.utils.get(reaction.message.guild.roles, name="DJ")
 
-        #     if added:
-        #         await member.add_roles(role)
-        #     else:
-        #         await member.remove_roles(role)
+        print("{} reacted".format(member))
+
+        if added:
+            await member.add_roles(role)
+        else:
+            await member.remove_roles(role)
 
 
 @client.event  # event decorator/wrapper (anytime some event is going to occur)
