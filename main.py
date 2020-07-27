@@ -524,6 +524,8 @@ async def on_ready():
     try:
         print(f"We have logged in as {client.user}")
         await client.change_presence(activity=discord.Activity(name="you for !help", type=discord.ActivityType.listening))
+        message = await client.get_channel(737441218044100739).send("Please react with 🎵 to get DJ role")
+        await message.add_reaction("🎵")
     except Exception as e:
         print(e)
 
