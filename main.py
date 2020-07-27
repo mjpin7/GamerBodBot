@@ -501,22 +501,27 @@ handler.add_command({
 })
 
 async def manage_reaction(reaction, user, added):
+    info_dict = {
+        737443156785627186: 
+            🎵: DJ
+    }
 
     if user == client.user:
-        print("Bot {} reacted".format(reaction.message.author))
+        pass
     else:
         message_id = reaction.message.id
-        
+        mapping = info_dict[message_id]
 
-        member = discord.utils.get(reaction.message.guild.members, id=user.id)
-        role = discord.utils.get(reaction.message.guild.roles, name="DJ")
-
-        print("{} reacted".format(member))
-
-        if added:
-            await member.add_roles(role)
+        if not reaction.emoji in mapping:
+            pass
         else:
-            await member.remove_roles(role)
+            member = discord.utils.get(reaction.message.guild.members, id=user.id)
+            role = discord.utils.get(reaction.message.guild.roles, name=mapping[reaction.emoji])
+
+            if added:
+                await member.add_roles(role)
+            else:
+                await member.remove_roles(role)
 
 
 @client.event  # event decorator/wrapper (anytime some event is going to occur)
@@ -524,8 +529,6 @@ async def on_ready():
     try:
         print(f"We have logged in as {client.user}")
         await client.change_presence(activity=discord.Activity(name="you for !help", type=discord.ActivityType.listening))
-        message = await client.get_channel(737441218044100739).send("Please react with 🎵 to get \"DJ\" role")
-        await message.add_reaction("🎵")
     except Exception as e:
         print(e)
 
