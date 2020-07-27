@@ -504,11 +504,11 @@ async def manage_reaction(reaction, user, added):
 
     if reaction.message.author == client.user:
         pass
-        
+
     message_id = reaction.message.id
 
     member = discord.utils.get(reaction.message.guild.members, id=user.id)
-    role = discord.utils.get(reaction.message.guild.roles, id=737425471343427745)
+    role = discord.utils.get(reaction.message.guild.roles, name="test")
 
     if added:
         await member.add_roles(member, role)
