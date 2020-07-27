@@ -511,19 +511,19 @@ async def manage_reaction(reaction, user, added):
         pass
     else:
         message_id = reaction.message.id
-        mapping = info_dict[message_id]
+        #mapping = info_dict[message_id]
         print(reaction.emoji)
 
-        if not reaction.emoji in mapping:
-            pass
-        else:
-            member = discord.utils.get(reaction.message.guild.members, id=user.id)
-            role = discord.utils.get(reaction.message.guild.roles, name=mapping[reaction.emoji])
+        # if not reaction.emoji in mapping:
+        #     pass
+        # else:
+        #     member = discord.utils.get(reaction.message.guild.members, id=user.id)
+        #     role = discord.utils.get(reaction.message.guild.roles, name=mapping[reaction.emoji])
 
-            if added:
-                await member.add_roles(role)
-            else:
-                await member.remove_roles(role)
+        #     if added:
+        #         await member.add_roles(role)
+        #     else:
+        #         await member.remove_roles(role)
 
 
 @client.event  # event decorator/wrapper (anytime some event is going to occur)
