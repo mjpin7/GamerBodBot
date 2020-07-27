@@ -503,20 +503,20 @@ handler.add_command({
 async def manage_reaction(reaction, user, added):
 
     if user == client.user:
-        print("Bot {} reacted".format(reaction.message.author))
+        pass
     else:
         message_id = reaction.message.id
-        
 
-        member = discord.utils.get(reaction.message.guild.members, id=user.id)
-        role = discord.utils.get(reaction.message.guild.roles, name="DJ")
-
-        print("{} reacted".format(member))
-
-        if added:
-            await member.add_roles(role)
+        if reaction.message.channel.id != 737441218044100739:
+            pass
         else:
-            await member.remove_roles(role)
+            member = discord.utils.get(reaction.message.guild.members, id=user.id)
+            role = discord.utils.get(reaction.message.guild.roles, name="DJ")
+
+            if added:
+                await member.add_roles(role)
+            else:
+                await member.remove_roles(role)
 
 
 @client.event  # event decorator/wrapper (anytime some event is going to occur)
