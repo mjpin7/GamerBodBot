@@ -502,8 +502,9 @@ handler.add_command({
 
 async def manage_reaction(reaction, user, added):
     info_dict = {
-        737443156785627186: 
+        737443156785627186: {
             musical_note: DJ
+        }
     }
 
     if user == client.user:
