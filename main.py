@@ -512,7 +512,7 @@ async def manage_reaction(reaction, user, added):
     else:
         message_id = reaction.message.id
         #mapping = info_dict[message_id]
-        print(reaction.emoji)
+        print(reaction.emoji.name)
 
         # if not reaction.emoji in mapping:
         #     pass
